@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Theme 7 · The Replication Crisis & Open Science</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0f0e0c; --bg2:#15120f; --panel:#1a1713; --panel2:#221e19; --box:#1c1916;
+  --gold:#c9a96e; --gold2:#e3c891; --goldD:#9c8049; --goldFaint:#6b5c3e;
+  --ink:#ece6db; --soft:#b8b0a2; --faint:#8a8073; --line:#2e2820; --line2:#3a3025;
+  --green:#6fae73; --greenBg:#1c2a1d; --red:#c77b6b; --redBg:#2a1c19; --blue:#7fa6c9;
+  --serif:'Cormorant Garamond',Georgia,serif; --sans:'DM Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:rgba(201,169,110,.28);color:#fff}
+::-webkit-scrollbar{width:11px;height:11px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:#332c22;border-radius:6px;border:2px solid var(--bg)}
+::-webkit-scrollbar-thumb:hover{background:var(--goldD)}
+
+/* ===================== LAYOUT ===================== */
+.app{display:flex;min-height:100vh}
+.sidebar{width:248px;flex-shrink:0;background:linear-gradient(180deg,#13110e,#0d0c0a);
+  border-right:1px solid var(--line2);position:fixed;top:0;left:0;height:100vh;
+  display:flex;flex-direction:column;z-index:40;padding:26px 0}
+.brand{padding:0 26px 22px;border-bottom:1px solid var(--line)}
+.brand .kicker{font-family:var(--sans);font-size:10px;letter-spacing:.32em;text-transform:uppercase;
+  color:var(--goldD);font-weight:600}
+.brand h1{font-family:var(--serif);font-size:30px;font-weight:600;line-height:1.05;margin-top:7px;color:var(--gold2);letter-spacing:.5px}
+.brand .sub{font-size:11.5px;color:var(--faint);margin-top:8px;font-style:italic;font-family:var(--serif);font-size:14px}
+.nav{padding:20px 16px;display:flex;flex-direction:column;gap:4px}
+.nav button{display:flex;align-items:center;gap:13px;width:100%;text-align:left;background:none;border:none;
+  color:var(--soft);font-family:var(--sans);font-size:14px;font-weight:500;padding:12px 14px;border-radius:9px;
+  cursor:pointer;transition:.18s;letter-spacing:.02em}
+.nav button .ico{width:20px;height:20px;flex-shrink:0;opacity:.8;display:flex;align-items:center;justify-content:center}
+.nav button:hover{background:rgba(201,169,110,.07);color:var(--ink)}
+.nav button.active{background:linear-gradient(90deg,rgba(201,169,110,.16),rgba(201,169,110,.02));
+  color:var(--gold2);box-shadow:inset 2px 0 0 var(--gold)}
+.nav .num{margin-left:auto;font-size:11px;color:var(--goldD);font-weight:600;background:rgba(201,169,110,.1);
+  padding:1px 8px;border-radius:20px}
+.side-foot{margin-top:auto;padding:18px 26px 4px;border-top:1px solid var(--line);font-size:11px;color:var(--faint);line-height:1.5}
+.side-foot b{color:var(--soft);font-weight:600}
+
+.main{margin-left:248px;flex:1;min-width:0}
+.view{display:none;animation:fade .45s ease;padding:42px 54px 90px;max-width:1280px}
+.view.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+.page-head{margin-bottom:30px}
+.page-head .eyebrow{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--goldD);font-weight:600}
+.page-head h2{font-family:var(--serif);font-size:42px;font-weight:600;color:var(--gold2);margin-top:8px;line-height:1.05}
+.page-head p{color:var(--soft);margin-top:12px;max-width:760px;font-size:15px}
+.rule{height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin:18px 0 0;opacity:.5}
+
+/* ===================== OVERVIEW ===================== */
+.intro-card{background:linear-gradient(135deg,var(--panel),#100e0b);border:1px solid var(--line2);
+  border-radius:16px;padding:30px 34px;margin-bottom:34px;position:relative;overflow:hidden}
+.intro-card::before{content:"§7";position:absolute;right:24px;top:-14px;font-family:var(--serif);
+  font-size:140px;color:rgba(201,169,110,.05);font-weight:700;pointer-events:none}
+.intro-card h3{font-family:var(--serif);font-size:25px;color:var(--gold2);margin-bottom:10px;font-weight:600}
+.intro-card p{color:var(--soft);max-width:820px;font-size:14.5px}
+.intro-card .tags{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px}
+.intro-card .tags span{font-size:11.5px;color:var(--gold);background:rgba(201,169,110,.08);
+  border:1px solid var(--line2);padding:5px 12px;border-radius:30px}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:18px}
+.lcard{background:linear-gradient(160deg,var(--panel),#121009);border:1px solid var(--line2);border-radius:14px;
+  padding:22px;cursor:pointer;transition:.22s;position:relative;overflow:hidden;min-height:172px;display:flex;flex-direction:column}
+.lcard:hover{transform:translateY(-4px);border-color:var(--goldD);box-shadow:0 14px 34px rgba(0,0,0,.5)}
+.lcard .lnum{font-family:var(--serif);font-size:46px;font-weight:700;color:rgba(201,169,110,.22);line-height:.8;position:absolute;top:16px;right:18px}
+.lcard:hover .lnum{color:rgba(201,169,110,.4)}
+.lcard .lsec{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--goldD);font-weight:600;margin-bottom:auto}
+.lcard h4{font-family:var(--serif);font-size:22px;font-weight:600;color:var(--ink);line-height:1.12;margin:14px 0 8px;max-width:84%}
+.lcard p{font-size:12.5px;color:var(--faint);line-height:1.45}
+.lcard .go{margin-top:14px;font-size:12px;color:var(--gold);font-weight:600;display:flex;align-items:center;gap:6px;opacity:0;transition:.22s}
+.lcard:hover .go{opacity:1;gap:10px}
+
+/* ===================== LESSON DETAIL ===================== */
+.lesson-top{display:flex;align-items:center;gap:16px;margin-bottom:8px}
+.chip{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);background:rgba(201,169,110,.1);
+  border:1px solid var(--line2);padding:6px 14px;border-radius:30px;font-weight:600}
+.lesson-counter{margin-left:auto;font-size:12.5px;color:var(--faint)}
+.lesson-title{font-family:var(--serif);font-size:38px;font-weight:600;color:var(--gold2);line-height:1.07;margin:6px 0 22px}
+.lesson-title em{font-style:italic;color:var(--ink)}
+.lesson-body{display:grid;grid-template-columns:1.55fr 1fr;gap:30px;align-items:start}
+@media(max-width:1080px){.lesson-body{grid-template-columns:1fr}}
+.diagram-wrap{background:radial-gradient(120% 120% at 30% 0%,#16130f,#0c0b09);border:1px solid var(--line2);
+  border-radius:18px;padding:14px;position:relative;box-shadow:inset 0 0 60px rgba(0,0,0,.4)}
+.diagram-wrap::after{content:"";position:absolute;inset:0;border-radius:18px;pointer-events:none;
+  box-shadow:inset 0 1px 0 rgba(201,169,110,.08)}
+.diagram-wrap svg{width:100%;height:auto;display:block}
+.svg-title{font-family:var(--sans);font-weight:600}
+.diagram-cap{text-align:center;font-size:11.5px;color:var(--faint);font-style:italic;font-family:var(--serif);
+  font-size:14px;padding:10px 20px 4px}
+
+.points{display:flex;flex-direction:column;gap:13px}
+.points .ph{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--goldD);font-weight:600;margin-bottom:2px}
+.point{display:flex;gap:13px;background:linear-gradient(120deg,var(--panel),transparent);
+  border:1px solid var(--line);border-left:2px solid var(--gold);border-radius:0 10px 10px 0;padding:13px 15px;transition:.18s}
+.point:hover{border-left-color:var(--gold2);background:linear-gradient(120deg,var(--panel2),transparent)}
+.point .pn{font-family:var(--serif);font-size:21px;font-weight:700;color:var(--gold);line-height:1;flex-shrink:0;width:20px}
+.point .pt{font-size:13.5px;color:var(--soft);line-height:1.5}
+.point .pt b{color:var(--ink);font-weight:600}
+.hook{margin-top:6px;background:linear-gradient(120deg,rgba(201,169,110,.12),rgba(201,169,110,.02));
+  border:1px dashed var(--goldD);border-radius:12px;padding:15px 17px;display:flex;gap:13px;align-items:flex-start}
+.hook .hi{font-size:22px;flex-shrink:0;filter:saturate(.6)}
+.hook .hl{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:3px}
+.hook .ht{font-size:13.5px;color:var(--ink);font-style:italic;font-family:var(--serif);font-size:16px;line-height:1.4}
+.exam{margin-top:4px;background:var(--box);border:1px solid var(--line2);border-radius:12px;padding:14px 16px}
+.exam .el{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--red);font-weight:700;margin-bottom:5px;display:flex;align-items:center;gap:7px}
+.exam .et{font-size:13px;color:var(--soft);line-height:1.5}
+.exam .et b{color:var(--ink)}
+
+.lesson-nav{display:flex;justify-content:space-between;margin-top:34px;gap:14px}
+.lesson-nav button{background:var(--panel);border:1px solid var(--line2);color:var(--soft);padding:13px 22px;border-radius:10px;
+  cursor:pointer;font-family:var(--sans);font-size:13.5px;font-weight:500;transition:.18s;display:flex;align-items:center;gap:9px;max-width:46%}
+.lesson-nav button:hover:not(:disabled){border-color:var(--goldD);color:var(--gold2);background:var(--panel2)}
+.lesson-nav button:disabled{opacity:.3;cursor:not-allowed}
+.lesson-nav button .lbl{display:flex;flex-direction:column;line-height:1.2}
+.lesson-nav button .lbl small{font-size:10px;color:var(--faint);letter-spacing:.1em;text-transform:uppercase}
+.lesson-nav button.nx{margin-left:auto;text-align:right}
+.lesson-nav button.nx .lbl{align-items:flex-end}
+
+/* ===================== FLASHCARDS ===================== */
+.fc-controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:24px}
+.filter{display:flex;flex-wrap:wrap;gap:7px}
+.filter button{background:var(--panel);border:1px solid var(--line2);color:var(--soft);font-family:var(--sans);
+  font-size:12.5px;font-weight:500;padding:8px 15px;border-radius:30px;cursor:pointer;transition:.16s}
+.filter button:hover{border-color:var(--goldD);color:var(--ink)}
+.filter button.on{background:linear-gradient(90deg,rgba(201,169,110,.2),rgba(201,169,110,.06));
+  color:var(--gold2);border-color:var(--goldD)}
+.fc-actions{margin-left:auto;display:flex;gap:9px}
+.btn{background:var(--panel);border:1px solid var(--line2);color:var(--gold);font-family:var(--sans);font-size:12.5px;
+  font-weight:600;padding:9px 17px;border-radius:9px;cursor:pointer;transition:.16s;display:flex;align-items:center;gap:7px}
+.btn:hover{background:var(--panel2);border-color:var(--goldD);color:var(--gold2)}
+.fc-count{font-size:12.5px;color:var(--faint);margin-bottom:16px}
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:17px}
+.flip{perspective:1400px;height:218px;cursor:pointer}
+.flip-in{position:relative;width:100%;height:100%;transition:transform .6s cubic-bezier(.4,.2,.2,1);transform-style:preserve-3d}
+.flip.flipped .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:22px;display:flex;flex-direction:column;
+  border:1px solid var(--line2);overflow:hidden}
+.face.front{background:linear-gradient(155deg,var(--panel),#100e0b)}
+.face.back{background:linear-gradient(155deg,#1d2519,#11140d);transform:rotateY(180deg);border-color:#3a4a30}
+.face .ftag{font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;color:var(--goldD)}
+.face.back .ftag{color:var(--green)}
+.face .q{font-family:var(--serif);font-size:21px;font-weight:600;color:var(--ink);line-height:1.22;margin:auto 0;display:flex;align-items:center}
+.face .a{font-size:13.5px;color:#d8e0d0;line-height:1.5;margin:auto 0;overflow-y:auto}
+.face .a b{color:#fff}
+.face .hint{font-size:10.5px;color:var(--faint);margin-top:8px;display:flex;align-items:center;gap:6px}
+.face.back .hint{color:#7c9270}
+.flip-num{position:absolute;top:14px;right:16px;font-family:var(--serif);font-size:15px;color:rgba(201,169,110,.3);font-weight:700}
+
+/* ===================== MCQ ===================== */
+.quiz-head{display:flex;align-items:center;gap:18px;margin-bottom:8px;flex-wrap:wrap}
+.scorebar{margin-left:auto;display:flex;align-items:center;gap:14px}
+.scorebadge{background:var(--panel);border:1px solid var(--line2);border-radius:30px;padding:8px 18px;font-size:13px;color:var(--soft)}
+.scorebadge b{color:var(--gold2);font-family:var(--serif);font-size:18px}
+.progwrap{height:5px;background:var(--line);border-radius:5px;overflow:hidden;margin:18px 0 28px}
+.progbar{height:100%;width:0;background:linear-gradient(90deg,var(--goldD),var(--gold2));transition:.5s;border-radius:5px}
+.q-card{background:linear-gradient(150deg,var(--panel),#100e0b);border:1px solid var(--line2);border-radius:16px;
+  padding:26px 28px;margin-bottom:20px}
+.q-card .qmeta{display:flex;align-items:center;gap:11px;margin-bottom:14px}
+.q-card .qn{font-family:var(--serif);font-size:14px;font-weight:700;color:var(--bg);background:var(--gold);
+  width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.q-card .qtopic{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--goldD);font-weight:600}
+.q-card .qtext{font-family:var(--serif);font-size:21px;font-weight:600;color:var(--ink);line-height:1.3;margin-bottom:18px}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{display:flex;align-items:flex-start;gap:13px;background:var(--box);border:1px solid var(--line2);border-radius:11px;
+  padding:14px 16px;cursor:pointer;transition:.16s;font-size:14px;color:var(--soft);line-height:1.4}
+.opt:hover{border-color:var(--goldD);background:var(--panel2);color:var(--ink)}
+.opt .ol{font-family:var(--serif);font-weight:700;font-size:15px;color:var(--gold);width:22px;height:22px;border:1.5px solid var(--goldD);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.16s;font-size:13px}
+.opt.correct{background:var(--greenBg);border-color:var(--green);color:#d6e8d3}
+.opt.correct .ol{background:var(--green);border-color:var(--green);color:#0f1a0e}
+.opt.wrong{background:var(--redBg);border-color:var(--red);color:#ecccc4}
+.opt.wrong .ol{background:var(--red);border-color:var(--red);color:#1a0e0c}
+.opt.locked{cursor:default;pointer-events:none;opacity:.55}
+.opt.locked.correct,.opt.locked.wrong{opacity:1}
+.explain{margin-top:15px;border-radius:11px;padding:0 17px;max-height:0;overflow:hidden;opacity:0;
+  transition:max-height .4s ease,opacity .3s,padding .3s}
+.explain.show{max-height:340px;opacity:1;padding:15px 17px}
+.explain.ok{background:rgba(111,174,115,.08);border:1px solid #355936}
+.explain.no{background:rgba(199,123,107,.08);border:1px solid #5e372e}
+.explain .eh{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.explain.ok .eh{color:var(--green)} .explain.no .eh{color:var(--red)}
+.explain p{font-size:13.5px;color:var(--soft);line-height:1.55}
+.explain p b{color:var(--ink)}
+.quiz-end{text-align:center;padding:50px 30px;background:linear-gradient(150deg,var(--panel),#100e0b);
+  border:1px solid var(--line2);border-radius:18px;display:none}
+.quiz-end.show{display:block;animation:fade .5s}
+.quiz-end .big{font-family:var(--serif);font-size:64px;font-weight:700;color:var(--gold2);line-height:1}
+.quiz-end .msg{font-family:var(--serif);font-size:26px;color:var(--ink);margin:10px 0 6px}
+.quiz-end p{color:var(--soft);margin-bottom:24px}
+
+.empty{color:var(--faint);font-size:14px;padding:40px;text-align:center;font-style:italic;font-family:var(--serif);font-size:18px}
+@media(max-width:820px){
+  .sidebar{width:64px;padding:18px 0}
+  .brand,.side-foot{display:none}
+  .nav button .txt,.nav .num{display:none}
+  .nav button{justify-content:center;padding:13px}
+  .main{margin-left:64px}
+  .view{padding:26px 20px 80px}
+  .lesson-title{font-size:28px}.page-head h2{font-size:30px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="kicker">Methods · Theme 7</div>
+      <h1>The Crisis<br>& The Cure</h1>
+      <div class="sub">Replication, bias &amp; open science</div>
+    </div>
+    <nav class="nav" id="nav">
+      <button data-view="overview" class="active"><span class="ico">▦</span><span class="txt">Overview</span></button>
+      <button data-view="lessons"><span class="ico">◈</span><span class="txt">Lessons</span><span class="num" id="navLcount">0</span></button>
+      <button data-view="flash"><span class="ico">⮂</span><span class="txt">Flashcards</span><span class="num" id="navFcount">0</span></button>
+      <button data-view="mcq"><span class="ico">✓</span><span class="txt">MCQ Exam</span><span class="num" id="navQcount">0</span></button>
+    </nav>
+    <div class="side-foot">
+      <b>Sources</b><br>Wagenmakers et al. (2012) · Ioannidis et al. (2014) · Wicherts (2017)
+    </div>
+  </aside>
+
+  <main class="main">
+    <!-- OVERVIEW -->
+    <section class="view active" id="view-overview">
+      <div class="page-head">
+        <div class="eyebrow">Study Platform</div>
+        <h2>Theme 7 — Overview</h2>
+        <p>Why so many published findings fail to replicate, the human biases and questionable research practices that pollute the literature, and the open-science toolkit built to fix it. Click any card to open the visual lesson.</p>
+        <div class="rule"></div>
+      </div>
+      <div class="intro-card">
+        <h3>The one-sentence summary of this whole theme</h3>
+        <p>Researchers are <em>only human</em> — pushed by confirmation bias, hindsight bias and a “publish-or-perish” incentive structure, they (often unknowingly) turn <b>exploratory</b> fishing into <b>confirmatory</b> claims. The result is a literature that is “too good to be true.” The remedy is to make the line between exploration and confirmation impossible to blur: <b>preregistration, transparency, and replication.</b></p>
+        <div class="tags" id="introTags"></div>
+      </div>
+      <div class="grid" id="overviewGrid"></div>
+    </section>
+
+    <!-- LESSONS -->
+    <section class="view" id="view-lessons">
+      <div id="lessonDetail"></div>
+    </section>
+
+    <!-- FLASHCARDS -->
+    <section class="view" id="view-flash">
+      <div class="page-head">
+        <div class="eyebrow">Active Recall</div>
+        <h2>Flashcards</h2>
+        <p>Click a card to flip. Filter by topic, shuffle the deck, or reset. Aim to answer out loud <em>before</em> you flip.</p>
+        <div class="rule"></div>
+      </div>
+      <div class="fc-controls">
+        <div class="filter" id="fcFilter"></div>
+        <div class="fc-actions">
+          <button class="btn" id="shuffleBtn">⤮ Shuffle</button>
+          <button class="btn" id="resetFcBtn">↺ Reset</button>
+        </div>
+      </div>
+      <div class="fc-count" id="fcCount"></div>
+      <div class="fc-grid" id="fcGrid"></div>
+    </section>
+
+    <!-- MCQ -->
+    <section class="view" id="view-mcq">
+      <div class="page-head">
+        <div class="eyebrow">Exam Practice</div>
+        <h2>Multiple-Choice Exam</h2>
+        <p>Fifteen exam-style questions with instant feedback. Pick an answer to lock it in and reveal the explanation.</p>
+        <div class="rule"></div>
+      </div>
+      <div class="quiz-head">
+        <button class="btn" id="resetQuizBtn">↺ Restart exam</button>
+        <div class="scorebar">
+          <div class="scorebadge">Score <b id="scoreNow">0</b> / <span id="scoreTot">0</span></div>
+          <div class="scorebadge">Answered <b id="answeredNow">0</b></div>
+        </div>
+      </div>
+      <div class="progwrap"><div class="progbar" id="progBar"></div></div>
+      <div id="quizList"></div>
+      <div class="quiz-end" id="quizEnd">
+        <div class="big" id="endPct">0%</div>
+        <div class="msg" id="endMsg">Exam complete</div>
+        <p id="endSub"></p>
+        <button class="btn" id="endRetry" style="margin:0 auto">↺ Try again</button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+/* ===================== DATA INJECTED BELOW ===================== */
+const C={gold:'#c9a96e',gold2:'#e3c891',goldD:'#9c8049',ink:'#ece6db',soft:'#b8b0a2',faint:'#8a8073',
+ green:'#6fae73',red:'#c77b6b',box:'#1c1916',box2:'#221e19',line:'#3a3025',blue:'#7fa6c9',purple:'#a98fc9'};
+const LESSONS=[
+/* ============================================================ L1 */
+{
+ id:'continuum', sec:'Foundations', tag:'Exploratory vs Confirmatory',
+ cardTitle:'Exploratory vs Confirmatory',
+ blurb:'The single continuum that explains the whole theme — and why mixing the two ends makes statistics “wonky.”',
+ title:'The Exploratory–Confirmatory <em>Continuum</em>',
+ cap:'After Wagenmakers et al. (2012), Fig. 1 — exploration breeds “wonky” stats; preregistered confirmation gives “sound” stats.',
+ svg:`<svg viewBox="0 0 680 470" role="img" aria-label="Exploratory to confirmatory continuum">
+  <defs>
+    <linearGradient id="cont" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#c77b6b"/><stop offset="0.5" stop-color="#9c8049"/><stop offset="1" stop-color="#6fae73"/>
+    </linearGradient>
+    <marker id="aR" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0L9 4.5L0 9z" fill="#c9a96e"/></marker>
+  </defs>
+  <text x="340" y="34" text-anchor="middle" class="svg-title" fill="#e3c891" font-size="19">Every study sits somewhere on ONE line</text>
+  <!-- the bar -->
+  <rect x="70" y="70" width="540" height="30" rx="15" fill="url(#cont)"/>
+  <text x="78" y="90" fill="#1a0e0c" font-size="12" font-weight="700">◀ EXPLORATORY</text>
+  <text x="602" y="90" text-anchor="end" fill="#0f1a0e" font-size="12" font-weight="700">CONFIRMATORY ▶</text>
+  <!-- left pole -->
+  <g transform="translate(70,150)">
+    <rect x="0" y="0" width="200" height="118" rx="11" fill="#1c1916" stroke="#c77b6b" stroke-width="1.6"/>
+    <text x="100" y="24" text-anchor="middle" fill="#e2a89b" font-size="13" font-weight="700">Hypothesis found IN the data</text>
+    <text x="100" y="46" text-anchor="middle" fill="#b8b0a2" font-size="11">post-hoc theorising · fishing</text>
+    <text x="100" y="64" text-anchor="middle" fill="#b8b0a2" font-size="11">data dredged · torture</text>
+    <rect x="22" y="78" width="156" height="28" rx="6" fill="#2a1c19"/>
+    <text x="100" y="97" text-anchor="middle" fill="#e2a89b" font-size="11.5" font-weight="700">⚠ “WONKY” STATS</text>
+  </g>
+  <!-- right pole -->
+  <g transform="translate(410,150)">
+    <rect x="0" y="0" width="200" height="118" rx="11" fill="#1c1916" stroke="#6fae73" stroke-width="1.6"/>
+    <text x="100" y="24" text-anchor="middle" fill="#9fd6a2" font-size="13" font-weight="700">Plan fixed BEFORE the data</text>
+    <text x="100" y="46" text-anchor="middle" fill="#b8b0a2" font-size="11">every analysis pre-specified</text>
+    <text x="100" y="64" text-anchor="middle" fill="#b8b0a2" font-size="11">no room to explore</text>
+    <rect x="22" y="78" width="156" height="28" rx="6" fill="#1c2a1d"/>
+    <text x="100" y="97" text-anchor="middle" fill="#9fd6a2" font-size="11.5" font-weight="700">✓ “SOUND” STATS</text>
+  </g>
+  <line x1="170" y1="100" x2="170" y2="148" stroke="#c77b6b" stroke-width="1.5" marker-end="url(#aR)"/>
+  <line x1="510" y1="100" x2="510" y2="148" stroke="#6fae73" stroke-width="1.5" marker-end="url(#aR)"/>
+  <!-- grey middle -->
+  <g transform="translate(255,290)">
+    <rect x="0" y="0" width="170" height="46" rx="10" fill="#221e19" stroke="#8a8073" stroke-width="1.3" stroke-dasharray="4 3"/>
+    <text x="85" y="20" text-anchor="middle" fill="#b8b0a2" font-size="11" font-weight="700">Most real research</text>
+    <text x="85" y="37" text-anchor="middle" fill="#8a8073" font-size="10.5">lives in this grey zone</text>
+  </g>
+  <line x1="340" y1="100" x2="340" y2="288" stroke="#8a8073" stroke-width="1.3" stroke-dasharray="3 3" marker-end="url(#aR)"/>
+  <!-- the law -->
+  <rect x="70" y="360" width="540" height="80" rx="12" fill="#15120f" stroke="#3a3025"/>
+  <text x="90" y="386" fill="#c9a96e" font-size="13" font-weight="700">⚖ THE STATISTICAL LAW</text>
+  <text x="90" y="409" fill="#ece6db" font-size="13">For hypothesis testing, the data may be used <tspan fill="#e3c891" font-weight="700">ONLY ONCE.</tspan></text>
+  <text x="90" y="429" fill="#b8b0a2" font-size="12">Use data to BUILD a hypothesis, and you can no longer use that same data to TEST it (= “double-dipping”).</text>
+ </svg>`,
+ points:[
+  ['1','<b>Two ends, one line.</b> Purely <b>exploratory</b> = the hypothesis is found in the data after looking. Purely <b>confirmatory</b> = the entire analysis plan is written before the first participant is run.'],
+  ['2','<b>Wonky vs sound stats.</b> The further left you slide, the more the statistics overestimate the evidence. <i>p</i>-values and Type I/II error rates are only valid on the confirmatory end.'],
+  ['3','<b>The data may be used only once.</b> If a hypothesis is suggested by a dataset, that same dataset can’t fairly test it — you need a fresh sample.'],
+  ['4','<b>Double-dipping.</b> Testing a hypothesis on the very data that inspired it inflates Type I error; <i>p</i>-values can no longer be trusted (term from neuroimaging).'],
+  ['5','<b>Exploration is NOT bad.</b> It is essential to discovery — it just must be <i>labelled</i> exploratory, never sold as a confirmatory test.']
+ ],
+ hook:'“Find your hypothesis in your results and the stats go all wonky.” — Goldacre. Exploration suggests; confirmation tests; never let one wear the other’s coat.',
+ exam:'Know the precise difference between <b>confirmation bias</b> (a human tendency to fine-tune toward a desired result) and <b>confirmatory research</b> (a method that <i>prevents</i> fine-tuning because the plan is fixed in advance). Examiners love this contrast.'
+},
+/* ============================================================ L2 */
+{
+ id:'repcrisis', sec:'The Problem', tag:'Replication Crisis',
+ cardTitle:'The Replication Crisis',
+ blurb:'How often do famous findings survive a re-test? Far less often than you’d hope — the numbers that started the alarm.',
+ title:'The Replication <em>Crisis</em>',
+ cap:'Reproducibility Project: Psychology (Open Science Collaboration) plus biomedical replication rates cited across the readings.',
+ svg:`<svg viewBox="0 0 680 470" role="img" aria-label="Replication rates">
+  <defs><marker id="aR2" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0L9 4.5L0 9z" fill="#c9a96e"/></marker></defs>
+  <text x="340" y="32" text-anchor="middle" class="svg-title" fill="#e3c891" font-size="19">“The stories are too good to be true”</text>
+  <!-- bar chart: original vs replication -->
+  <g transform="translate(70,70)">
+    <line x1="0" y1="180" x2="250" y2="180" stroke="#3a3025" stroke-width="1.4"/>
+    <line x1="0" y1="0" x2="0" y2="180" stroke="#3a3025" stroke-width="1.4"/>
+    <!-- original 97 -->
+    <rect x="40" y="6" width="60" height="174" rx="5" fill="#9c8049"/>
+    <text x="70" y="-6" text-anchor="middle" fill="#e3c891" font-size="18" font-weight="700">97%</text>
+    <text x="70" y="196" text-anchor="middle" fill="#b8b0a2" font-size="11">Original</text>
+    <text x="70" y="209" text-anchor="middle" fill="#8a8073" font-size="9.5">studies sig.</text>
+    <!-- replication 36 -->
+    <rect x="150" y="115" width="60" height="65" rx="5" fill="#c77b6b"/>
+    <text x="180" y="105" text-anchor="middle" fill="#e2a89b" font-size="18" font-weight="700">36%</text>
+    <text x="180" y="196" text-anchor="middle" fill="#b8b0a2" font-size="11">Replication</text>
+    <text x="180" y="209" text-anchor="middle" fill="#8a8073" font-size="9.5">studies sig.</text>
+    <text x="125" y="238" text-anchor="middle" fill="#c9a96e" font-size="11">100 psychology studies re-run</text>
+  </g>
+  <!-- stat callouts right -->
+  <g transform="translate(370,68)">
+    <rect x="0" y="0" width="240" height="58" rx="10" fill="#1c1916" stroke="#c77b6b" stroke-width="1.4"/>
+    <text x="16" y="25" fill="#e2a89b" font-size="22" font-weight="700">11%</text>
+    <text x="74" y="21" fill="#b8b0a2" font-size="11.5">cancer-biology findings</text>
+    <text x="74" y="37" fill="#8a8073" font-size="10.5">replicated (Begley &amp; Ellis)</text>
+    <rect x="0" y="68" width="240" height="58" rx="10" fill="#1c1916" stroke="#9c8049" stroke-width="1.4"/>
+    <text x="16" y="93" fill="#e3c891" font-size="20" font-weight="700">&lt;50%</text>
+    <text x="74" y="89" fill="#b8b0a2" font-size="11.5">biomedical replication</text>
+    <text x="74" y="105" fill="#8a8073" font-size="10.5">rates (some as low as 11%)</text>
+    <rect x="0" y="136" width="240" height="58" rx="10" fill="#1c1916" stroke="#6fae73" stroke-width="1.4"/>
+    <text x="16" y="161" fill="#9fd6a2" font-size="20" font-weight="700">90%+</text>
+    <text x="74" y="157" fill="#b8b0a2" font-size="11.5">of psychology papers</text>
+    <text x="74" y="173" fill="#8a8073" font-size="10.5">report POSITIVE results (Fanelli)</text>
+  </g>
+  <!-- bottom logic strip -->
+  <rect x="70" y="372" width="540" height="68" rx="12" fill="#15120f" stroke="#3a3025"/>
+  <text x="90" y="397" fill="#c9a96e" font-size="12.5" font-weight="700">WHY “TOO GOOD TO BE TRUE”?</text>
+  <text x="90" y="418" fill="#b8b0a2" font-size="12">If real effects are mixed &amp; studies under-powered, a ~90% success rate is statistically implausible —</text>
+  <text x="90" y="434" fill="#ece6db" font-size="12">it signals that the literature is <tspan fill="#e3c891" font-weight="700">filtered</tspan> (publication bias) and <tspan fill="#e3c891" font-weight="700">inflated</tspan> (p-hacking, HARKing).</text>
+ </svg>`,
+ points:[
+  ['1','<b>Reproducibility Project (psychology).</b> 100 published studies re-run: <b>97%</b> of the originals were significant, but only <b>~36%</b> of the replications were.'],
+  ['2','<b>Biomedicine is worse.</b> Replication rates below 50%, with cancer-biology findings replicating as low as <b>11%</b> (Begley &amp; Ellis; Prinz).'],
+  ['3','<b>The “success rate” red flag.</b> Over 90% of psychology articles report support for their hypothesis — Fanelli. Given low power, that is implausibly high.'],
+  ['4','<b>Failure ≠ proof of no effect.</b> A non-significant replication can be a Type II error or reflect a genuinely different context — it guides, not condemns.'],
+  ['5','<b>Many Labs.</b> The same 13 effects tested across 36 samples worldwide (n≈6,344) — large collaborations gauge how robust effects really are.']
+ ],
+ hook:'“97 → 36.” Picture nearly all originals winning, then two-thirds vanishing on re-test. The gap IS the crisis.',
+ exam:'Be ready to quote at least one concrete figure (97% vs 36% for psychology; 11% for cancer biology) and explain that a failed replication does <b>not</b> automatically mean the original effect is false — it may be a Type II error or a moderated effect.'
+},
+/* ============================================================ L3 */
+{
+ id:'confbias', sec:'Human Factors', tag:'Confirmation & Hindsight Bias',
+ cardTitle:'Confirmation & Hindsight Bias',
+ blurb:'The two cognitive biases that quietly steer honest researchers toward the result they were hoping for.',
+ title:'Confirmation &amp; Hindsight <em>Bias</em>',
+ cap:'Nickerson (1998) on confirmation bias; Roese &amp; Vohs (2012) on hindsight bias — the human engine behind QRPs.',
+ svg:`<svg viewBox="0 0 680 470" role="img" aria-label="Confirmation bias mechanisms">
+  <defs><marker id="aR3" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0L9 4.5L0 9z" fill="#c9a96e"/></marker></defs>
+  <text x="340" y="30" text-anchor="middle" class="svg-title" fill="#e3c891" font-size="19">We seek to CONFIRM, not falsify</text>
+  <!-- central belief -->
+  <g transform="translate(340,150)">
+    <circle cx="0" cy="0" r="48" fill="#221e19" stroke="#c9a96e" stroke-width="2.2"/>
+    <text x="0" y="-4" text-anchor="middle" fill="#e3c891" font-size="13" font-weight="700">MY</text>
+    <text x="0" y="14" text-anchor="middle" fill="#e3c891" font-size="13" font-weight="700">BELIEF</text>
+  </g>
+  <!-- three mechanisms -->
+  <g transform="translate(40,250)">
+    <rect x="0" y="0" width="186" height="92" rx="10" fill="#1c1916" stroke="#9c8049" stroke-width="1.4"/>
+    <text x="93" y="24" text-anchor="middle" fill="#e3c891" font-size="12.5" font-weight="700">1 · INTERPRET</text>
+    <text x="93" y="46" text-anchor="middle" fill="#b8b0a2" font-size="11">Ambiguous evidence is</text>
+    <text x="93" y="62" text-anchor="middle" fill="#b8b0a2" font-size="11">read as consistent with</text>
+    <text x="93" y="78" text-anchor="middle" fill="#b8b0a2" font-size="11">what I already believe</text>
+  </g>
+  <g transform="translate(247,250)">
+    <rect x="0" y="0" width="186" height="92" rx="10" fill="#1c1916" stroke="#9c8049" stroke-width="1.4"/>
+    <text x="93" y="24" text-anchor="middle" fill="#e3c891" font-size="12.5" font-weight="700">2 · SEARCH</text>
+    <text x="93" y="46" text-anchor="middle" fill="#b8b0a2" font-size="11">I look for evidence that</text>
+    <text x="93" y="62" text-anchor="middle" fill="#b8b0a2" font-size="11">CONFIRMS rather than</text>
+    <text x="93" y="78" text-anchor="middle" fill="#b8b0a2" font-size="11">disconfirms my view</text>
+  </g>
+  <g transform="translate(454,250)">
+    <rect x="0" y="0" width="186" height="92" rx="10" fill="#1c1916" stroke="#9c8049" stroke-width="1.4"/>
+    <text x="93" y="24" text-anchor="middle" fill="#e3c891" font-size="12.5" font-weight="700">3 · REMEMBER</text>
+    <text x="93" y="46" text-anchor="middle" fill="#b8b0a2" font-size="11">I recall supporting</text>
+    <text x="93" y="62" text-anchor="middle" fill="#b8b0a2" font-size="11">information more easily</text>
+    <text x="93" y="78" text-anchor="middle" fill="#b8b0a2" font-size="11">than contradicting it</text>
+  </g>
+  <line x1="300" y1="190" x2="150" y2="248" stroke="#c9a96e" stroke-width="1.4" marker-end="url(#aR3)"/>
+  <line x1="340" y1="200" x2="340" y2="248" stroke="#c9a96e" stroke-width="1.4" marker-end="url(#aR3)"/>
+  <line x1="380" y1="190" x2="530" y2="248" stroke="#c9a96e" stroke-width="1.4" marker-end="url(#aR3)"/>
+  <!-- hindsight bias -->
+  <g transform="translate(470,95)">
+    <rect x="0" y="0" width="200" height="62" rx="10" fill="#15120f" stroke="#7fa6c9" stroke-width="1.5"/>
+    <text x="100" y="22" text-anchor="middle" fill="#9fc0e0" font-size="12.5" font-weight="700">+ HINDSIGHT BIAS</text>
+    <text x="100" y="41" text-anchor="middle" fill="#b8b0a2" font-size="10.5">“I knew it all along” —</text>
+    <text x="100" y="55" text-anchor="middle" fill="#b8b0a2" font-size="10.5">makes a post-hoc story feel obvious</text>
+  </g>
+  <!-- bottom -->
+  <rect x="40" y="372" width="600" height="68" rx="12" fill="#15120f" stroke="#3a3025"/>
+  <text x="60" y="397" fill="#c9a96e" font-size="12.5" font-weight="700">⚠ DON’T CONFUSE TWO TERMS</text>
+  <text x="60" y="418" fill="#ece6db" font-size="12"><tspan fill="#e3c891" font-weight="700">Confirmation bias</tspan> = the human pull to fine-tune analyses toward a wanted result.</text>
+  <text x="60" y="434" fill="#ece6db" font-size="12"><tspan fill="#9fd6a2" font-weight="700">Confirmatory research</tspan> = a method that BLOCKS that pull by fixing the plan in advance.</text>
+ </svg>`,
+ points:[
+  ['1','<b>Confirmation bias (Nickerson, 1998).</b> The deep tendency to seek confirmation, not disconfirmation, of our beliefs — pervasive and largely unconscious.'],
+  ['2','<b>It works three ways.</b> (1) interpret ambiguous info as supportive; (2) search for confirming evidence; (3) remember supporting info more easily.'],
+  ['3','<b>Hindsight bias.</b> Judging an event as more predictable <i>after</i> it happened — “I knew it all along.” It makes a post-hoc story feel like a real prediction.'],
+  ['4','<b>Why it matters for science.</b> These biases let researchers feel honest even while massaging data — you are “the easiest person to fool” (Feynman).'],
+  ['5','<b>The defence is structural.</b> You can’t will the bias away; you neutralise it by committing to the analysis before seeing the data.']
+ ],
+ hook:'Confirmation bias = the brain’s “yes-man.” It interprets, searches, and remembers — all in your favour. Hindsight bias then whispers “knew it all along.”',
+ exam:'A classic trap: the question pairs “confirmation bias” with “confirmatory research” to see if you can distinguish a <b>bias</b> (a tendency) from a <b>method</b> (a safeguard). They are near-opposites, not synonyms.'
+},
+/* ============================================================ L4 */
+{
+ id:'pubbias', sec:'Reporting Biases', tag:'Publication Bias · File-Drawer',
+ cardTitle:'Publication Bias & File-Drawer',
+ blurb:'Significant results get published; null results vanish into a drawer. The literature you read is a filtered, biased sample.',
+ title:'Publication Bias &amp; the <em>File-Drawer</em>',
+ cap:'Sterling (1959); Rosenthal (1979) “file drawer problem.” Funnel-plot asymmetry is the field-wide fingerprint.',
+ svg:`<svg viewBox="0 0 680 470" role="img" aria-label="Publication bias iceberg and funnel plot">
+  <text x="340" y="30" text-anchor="middle" class="svg-title" fill="#e3c891" font-size="19">What gets published is the tip</text>
+  <!-- waterline -->
+  <line x1="40" y1="120" x2="350" y2="120" stroke="#7fa6c9" stroke-width="1.4" stroke-dasharray="6 4"/>
+  <text x="356" y="116" fill="#7fa6c9" font-size="10.5">publication line</text>
+  <!-- tip -->
+  <path d="M195,60 L240,120 L150,120 Z" fill="#1c2a1d" stroke="#6fae73" stroke-width="1.8"/>
+  <text x="195" y="100" text-anchor="middle" fill="#9fd6a2" font-size="11" font-weight="700">SIG.</text>
+  <text x="195" y="48" text-anchor="middle" fill="#9fd6a2" font-size="11">published ✓</text>
+  <!-- submerged -->
+  <path d="M150,120 L240,120 L300,300 L90,300 Z" fill="#1c1916" stroke="#c77b6b" stroke-width="1.6" stroke-dasharray="5 4"/>
+  <text x="195" y="175" text-anchor="middle" fill="#e2a89b" font-size="11.5" font-weight="700">NULL / NEGATIVE</text>
+  <text x="195" y="198" text-anchor="middle" fill="#b8b0a2" font-size="10.5">never submitted…</text>
+  <text x="195" y="214" text-anchor="middle" fill="#b8b0a2" font-size="10.5">…or rejected by reviewers</text>
+  <!-- file drawer -->
+  <g transform="translate(120,238)">
+    <rect x="0" y="0" width="150" height="46" rx="6" fill="#221e19" stroke="#9c8049" stroke-width="1.3"/>
+    <rect x="60" y="18" width="30" height="8" rx="3" fill="#9c8049"/>
+    <text x="75" y="-8" text-anchor="middle" fill="#c9a96e" font-size="10.5" font-weight="700">📂 THE FILE DRAWER</text>
+  </g>
+  <!-- funnel plot -->
+  <g transform="translate(400,70)">
+    <text x="115" y="2" text-anchor="middle" fill="#c9a96e" font-size="12" font-weight="700">Funnel plot — the fingerprint</text>
+    <line x1="20" y1="20" x2="20" y2="200" stroke="#3a3025" stroke-width="1.3"/>
+    <line x1="20" y1="200" x2="230" y2="200" stroke="#3a3025" stroke-width="1.3"/>
+    <text x="8" y="110" fill="#8a8073" font-size="9" transform="rotate(-90 8 110)">precision →</text>
+    <text x="125" y="218" text-anchor="middle" fill="#8a8073" font-size="9.5">effect size →</text>
+    <!-- ideal funnel outline -->
+    <line x1="125" y1="30" x2="55" y2="195" stroke="#5c5043" stroke-width="1" stroke-dasharray="3 3"/>
+    <line x1="125" y1="30" x2="195" y2="195" stroke="#5c5043" stroke-width="1" stroke-dasharray="3 3"/>
+    <line x1="125" y1="30" x2="125" y2="200" stroke="#9c8049" stroke-width="1" stroke-dasharray="2 4"/>
+    <!-- dots present (right side) -->
+    ${[[120,40],[135,55],[110,70],[150,95],[128,120],[165,150],[120,175],[150,185],[178,178]].map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="4.5" fill="#6fae73"/>`).join('')}
+    <!-- missing dots (left side, hollow red) -->
+    ${[[100,150],[85,178],[110,185],[95,120]].map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="4.5" fill="none" stroke="#c77b6b" stroke-width="1.4" stroke-dasharray="2 2"/>`).join('')}
+    <text x="70" y="120" fill="#c77b6b" font-size="9.5">missing</text>
+    <text x="70" y="132" fill="#c77b6b" font-size="9.5">studies</text>
+  </g>
+  <!-- bottom -->
+  <rect x="40" y="372" width="600" height="68" rx="12" fill="#15120f" stroke="#3a3025"/>
+  <text x="60" y="397" fill="#c9a96e" font-size="12.5" font-weight="700">⇒ CONSEQUENCE</text>
+  <text x="60" y="418" fill="#b8b0a2" font-size="12">Meta-analyses built on the published record <tspan fill="#e3c891" font-weight="700">overestimate</tspan> true effects. Weak effects + small samples = most vulnerable.</text>
+  <text x="60" y="434" fill="#8a8073" font-size="11.5">Sterling (1959) first showed it; the asymmetric funnel plot is the standard detection tool — but use it cautiously.</text>
+ </svg>`,
+ points:[
+  ['1','<b>Study publication bias.</b> Studies are less likely to be published when results are <i>non-significant</i> — authors don’t submit them and editors/reviewers reject them.'],
+  ['2','<b>The file-drawer problem (Rosenthal, 1979).</b> Null studies sit unpublished in a drawer, so the visible literature is a skewed, positive-only sample.'],
+  ['3','<b>It inflates the truth.</b> Even genuine effects look bigger than they are, because only the luckier, larger estimates surface.'],
+  ['4','<b>Detection: funnel plots &amp; small-study effects.</b> Asymmetry (small studies showing bigger effects) hints at bias — but visual reading alone is “precarious.”'],
+  ['5','<b>Most vulnerable fields.</b> Those with weak effects and small samples, where genuine effects often miss significance, are hit hardest.']
+ ],
+ hook:'Iceberg + drawer: you only ever see the significant tip; the null mass is submerged in the file drawer.',
+ exam:'“File-drawer problem” and “study publication bias” are two names for the same thing — note that bias is added <b>twice</b>: authors self-censor AND editors/reviewers reject nulls. Funnel-plot asymmetry is the detection method.'
+}
+];
+
+/* ============================================================ L5 */
+LESSONS.push({
+ id:'selective', sec:'Reporting Biases', tag:'Selective Outcome & Analysis Reporting',
+ cardTitle:'Selective Outcome & Analysis Reporting',
+ blurb:'Measure many things, report only the winners. Two flavours: cherry-picking outcomes vs cherry-picking analyses.',
+ title:'Selective <em>Outcome</em> &amp; <em>Analysis</em> Reporting',
+ cap:'Ioannidis et al. (2014), Box 1. The FDA antidepressant case (Turner et al.) is the canonical real-world example.',
+ svg:`<svg viewBox="0 0 680 470" role="img" aria-label="Selective reporting funnel">
+  <defs><marker id="aR5" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0L9 4.5L0 9z" fill="#c9a96e"/></marker></defs>
+  <text x="340" y="30" text-anchor="middle" class="svg-title" fill="#e3c891" font-size="19">Many tested · few reported</text>
+  <!-- branch A: outcomes -->
+  <text x="170" y="62" text-anchor="middle" fill="#c9a96e" font-size="12.5" font-weight="700">A · SELECTIVE OUTCOME REPORTING</text>
+  ${[0,1,2,3,4].map(i=>{const y=80+i*30;const sig=i===2;return `<rect x="55" y="${y}" width="120" height="22" rx="5" fill="${sig?'#1c2a1d':'#1c1916'}" stroke="${sig?'#6fae73':'#3a3025'}" stroke-width="1.3"/><text x="115" y="${y+15}" text-anchor="middle" fill="${sig?'#9fd6a2':'#8a8073'}" font-size="10.5">outcome ${i+1}${sig?'  ✓ p<.05':''}</text>`;}).join('')}
+  <line x1="178" y1="145" x2="240" y2="145" stroke="#6fae73" stroke-width="1.6" marker-end="url(#aR5)"/>
+  <rect x="245" y="128" width="92" height="34" rx="7" fill="#1c2a1d" stroke="#6fae73" stroke-width="1.5"/>
+  <text x="291" y="149" text-anchor="middle" fill="#9fd6a2" font-size="11" font-weight="700">PAPER</text>
+  <text x="115" y="232" text-anchor="middle" fill="#8a8073" font-size="10">5 outcomes measured →</text>
+  <text x="115" y="245" text-anchor="middle" fill="#8a8073" font-size="10">only the significant one shown</text>
+  <!-- branch B: analyses -->
+  <text x="510" y="62" text-anchor="middle" fill="#c9a96e" font-size="12.5" font-weight="700">B · SELECTIVE ANALYSIS REPORTING</text>
+  <rect x="445" y="80" width="130" height="22" rx="5" fill="#221e19" stroke="#3a3025"/>
+  <text x="510" y="95" text-anchor="middle" fill="#b8b0a2" font-size="10.5">ONE outcome, many ways</text>
+  ${[['drop outliers?',0],['add covariate?',1],['log-transform?',2],['per-protocol?',3]].map(([t,i])=>{const y=115+i*30;const sig=i===3;return `<rect x="445" y="${y}" width="130" height="22" rx="5" fill="${sig?'#1c2a1d':'#1c1916'}" stroke="${sig?'#6fae73':'#3a3025'}" stroke-width="1.3"/><text x="510" y="${y+15}" text-anchor="middle" fill="${sig?'#9fd6a2':'#8a8073'}" font-size="10">${t}${sig?'  ✓':''}</text>`;}).join('')}
+  <text x="510" y="245" text-anchor="middle" fill="#8a8073" font-size="10">report the analysis that “worked”</text>
+  <!-- middle divider -->
+  <line x1="372" y1="75" x2="372" y2="250" stroke="#3a3025" stroke-width="1" stroke-dasharray="3 4"/>
+  <!-- FDA example -->
+  <rect x="55" y="268" width="570" height="92" rx="12" fill="#15120f" stroke="#9c8049" stroke-width="1.3"/>
+  <text x="75" y="292" fill="#c9a96e" font-size="12.5" font-weight="700">★ REAL CASE — antidepressant trials (Turner et al., FDA records)</text>
+  <text x="75" y="314" fill="#b8b0a2" font-size="11.5">~Half of trials were NEGATIVE in the FDA database — yet those negatives went unpublished or were</text>
+  <text x="75" y="332" fill="#b8b0a2" font-size="11.5">spun as positive. The published literature therefore <tspan fill="#e3c891" font-weight="700">overstated</tspan> the drugs’ benefits.</text>
+  <text x="75" y="350" fill="#8a8073" font-size="11">Same pattern found for antipsychotics — and industry-funded trials reported significance far more often.</text>
+  <!-- related forms -->
+  <rect x="55" y="372" width="278" height="66" rx="10" fill="#1c1916" stroke="#3a3025"/>
+  <text x="75" y="394" fill="#c9a96e" font-size="11.5" font-weight="700">Also in this family:</text>
+  <text x="75" y="412" fill="#b8b0a2" font-size="11">• Time-lag bias — nulls published, but late</text>
+  <text x="75" y="429" fill="#b8b0a2" font-size="11">• Relegating a primary outcome to “secondary”</text>
+  <rect x="347" y="372" width="278" height="66" rx="10" fill="#1c1916" stroke="#3a3025"/>
+  <text x="367" y="394" fill="#c9a96e" font-size="11.5" font-weight="700">The net effect (Box 1):</text>
+  <text x="367" y="412" fill="#b8b0a2" font-size="11">The literature carries an EXCESS of</text>
+  <text x="367" y="429" fill="#ece6db" font-size="11">significant results &amp; <tspan fill="#e3c891" font-weight="700">inflated</tspan> effect sizes.</text>
+ </svg>`,
+ points:[
+  ['1','<b>Selective outcome reporting.</b> Many outcomes are measured; the non-significant ones are quietly dropped and only the “winners” are reported.'],
+  ['2','<b>Selective analysis reporting.</b> One outcome is analysed many ways (outliers, covariates, transformations, per-protocol vs intention-to-treat); the most impressive variant is published.'],
+  ['3','<b>The antidepressant case (Turner et al.).</b> Comparing published papers to FDA records, ~half of trials were negative — but those were unpublished or reframed as positive, overstating efficacy.'],
+  ['4','<b>Cousins.</b> Time-lag bias (nulls appear, but late) and demoting a pre-specified primary outcome to “secondary.”'],
+  ['5','<b>Net result (Box 1).</b> An excess of significant findings and systematically over-estimated effect magnitudes across the field.']
+ ],
+ hook:'Two cherry-picks: WHICH OUTCOME (measure 5, report 1) and WHICH ANALYSIS (one outcome, run it 5 ways, report the win).',
+ exam:'Distinguish the two clearly: <b>outcome</b> reporting = picking among different dependent variables; <b>analysis</b> reporting = picking among different analytic routes to the <i>same</i> variable. The FDA antidepressant comparison is the example to name.'
+});
+/* ============================================================ L6 */
+LESSONS.push({
+ id:'proteus', sec:'Reporting Biases', tag:'Proteus Phenomenon',
+ cardTitle:'The Proteus Phenomenon',
+ blurb:'After a splashy positive result, journals rush to publish the opposite — producing wild, alternating extremes.',
+ title:'The <em>Proteus</em> Phenomenon',
+ cap:'Ioannidis &amp; Trikalinos (2005); Pfeiffer et al. (2011). Named for the shape-shifting Greek sea-god.',
+ svg:`<svg viewBox="0 0 680 470" role="img" aria-label="Proteus phenomenon oscillating estimates">
+  <text x="340" y="30" text-anchor="middle" class="svg-title" fill="#e3c891" font-size="19">Rapidly alternating extreme results</text>
+  <!-- axes -->
+  <g transform="translate(60,60)">
+    <line x1="0" y1="150" x2="560" y2="150" stroke="#3a3025" stroke-width="1.4"/>
+    <text x="560" y="170" text-anchor="end" fill="#8a8073" font-size="10.5">order of publication →</text>
+    <line x1="0" y1="20" x2="0" y2="280" stroke="#3a3025" stroke-width="1.4"/>
+    <text x="-6" y="14" text-anchor="end" fill="#8a8073" font-size="10">big +</text>
+    <text x="-6" y="288" text-anchor="end" fill="#8a8073" font-size="10">big −</text>
+    <!-- true effect line -->
+    <line x1="0" y1="150" x2="560" y2="150" stroke="#6fae73" stroke-width="1.3" stroke-dasharray="5 4"/>
+    <text x="430" y="143" fill="#6fae73" font-size="10">true (near-zero) effect</text>
+    <!-- oscillating path, dampening -->
+    <polyline points="40,40 110,250 180,70 250,235 320,95 390,205 460,118 530,170" fill="none" stroke="#c9a96e" stroke-width="2.4"/>
+    <circle cx="40" cy="40" r="6" fill="#6fae73"/><text x="40" y="28" text-anchor="middle" fill="#9fd6a2" font-size="9.5" font-weight="700">1st: BIG +</text>
+    <circle cx="110" cy="250" r="6" fill="#c77b6b"/><text x="110" y="270" text-anchor="middle" fill="#e2a89b" font-size="9.5" font-weight="700">refutation: BIG −</text>
+    <circle cx="180" cy="70" r="5" fill="#c9a96e"/>
+    <circle cx="250" cy="235" r="5" fill="#c9a96e"/>
+    <circle cx="320" cy="95" r="5" fill="#c9a96e"/>
+    <circle cx="390" cy="205" r="5" fill="#c9a96e"/>
+    <circle cx="460" cy="118" r="5" fill="#c9a96e"/>
+    <circle cx="530" cy="170" r="6" fill="#e3c891"/>
+    <text x="528" y="158" text-anchor="middle" fill="#e3c891" font-size="9.5">settles…</text>
+  </g>
+  <!-- mechanism -->
+  <rect x="60" y="362" width="560" height="80" rx="12" fill="#15120f" stroke="#3a3025"/>
+  <text x="80" y="386" fill="#c9a96e" font-size="12.5" font-weight="700">WHY IT HAPPENS</text>
+  <text x="80" y="407" fill="#b8b0a2" font-size="12">A first “positive” result is published fast. That opens a <tspan fill="#e3c891" font-weight="700">window</tspan> where a CONTRADICTING result is now</text>
+  <text x="80" y="424" fill="#b8b0a2" font-size="12">novel &amp; exciting — so it too is rushed out. Early estimates swing between extremes before converging on the truth.</text>
+ </svg>`,
+ points:[
+  ['1','<b>Definition.</b> After an initial striking “positive” result, there’s a window in which contradicting “negative” results become attractive to publish — so estimates swing wildly.'],
+  ['2','<b>Named after Proteus,</b> the sea-god who constantly changed shape: the early literature on a topic keeps flipping between extreme opposite findings.'],
+  ['3','<b>It’s a publication-timing bias.</b> Both the splashy positive and its dramatic refutation are favoured because each is novel — moderate or null findings aren’t.'],
+  ['4','<b>Early estimates are unstable.</b> The first few studies on a question are the <i>least</i> trustworthy; the truth emerges only as more accumulate.'],
+  ['5','<b>Linked to selection forces.</b> Pfeiffer et al. showed selection differs for first/discovery results vs later replication/refutation efforts.']
+ ],
+ hook:'Proteus = the shape-shifter. First a dazzling +, then a dramatic − — the field zig-zags before the dust settles near zero.',
+ exam:'Key cue words: “rapidly alternating extreme results,” “early contradictory estimates.” It’s about the <b>sequence/timing</b> of publications on one question, not about a single study.'
+});
+/* ============================================================ L7 */
+LESSONS.push({
+ id:'harking', sec:'Questionable Research Practices', tag:'HARKing',
+ cardTitle:'HARKing',
+ blurb:'Hypothesizing After the Results are Known — find a pattern, then pretend you predicted it all along.',
+ title:'<em>HARKing</em> — Hypothesizing After Results Known',
+ cap:'Kerr (1998); Wicherts’ (2017) Shakespeare “Sonnet 148” spike illustrates the danger of post-hoc storytelling.',
+ svg:`<svg viewBox="0 0 680 470" role="img" aria-label="HARKing short-circuits the hypothetico-deductive cycle">
+  <defs><marker id="aR7" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0L9 4.5L0 9z" fill="#c9a96e"/></marker>
+  <marker id="aRr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0L9 4.5L0 9z" fill="#c77b6b"/></marker></defs>
+  <text x="340" y="28" text-anchor="middle" class="svg-title" fill="#e3c891" font-size="19">The hypothesis sneaks in AFTER the data</text>
+  <!-- H-D cycle -->
+  <g transform="translate(175,180)" font-size="11">
+    <circle cx="0" cy="-95" r="34" fill="#1c1916" stroke="#9c8049" stroke-width="1.5"/><text x="0" y="-98" text-anchor="middle" fill="#e3c891" font-weight="700">Observe</text><text x="0" y="-84" text-anchor="middle" fill="#8a8073" font-size="9">literature</text>
+    <circle cx="90" cy="0" r="34" fill="#1c1916" stroke="#9c8049" stroke-width="1.5"/><text x="90" y="-3" text-anchor="middle" fill="#e3c891" font-weight="700">Hypoth.</text><text x="90" y="11" text-anchor="middle" fill="#8a8073" font-size="9">predict</text>
+    <circle cx="0" cy="95" r="34" fill="#1c1916" stroke="#9c8049" stroke-width="1.5"/><text x="0" y="92" text-anchor="middle" fill="#e3c891" font-weight="700">Test</text><text x="0" y="106" text-anchor="middle" fill="#8a8073" font-size="9">collect data</text>
+    <circle cx="-90" cy="0" r="34" fill="#1c1916" stroke="#9c8049" stroke-width="1.5"/><text x="-90" y="-3" text-anchor="middle" fill="#e3c891" font-weight="700">Evaluate</text><text x="-90" y="11" text-anchor="middle" fill="#8a8073" font-size="9">report</text>
+    <path d="M28,-78 A60 60 0 0 1 78,-28" fill="none" stroke="#9c8049" stroke-width="1.6" marker-end="url(#aR7)"/>
+    <path d="M78,28 A60 60 0 0 1 28,78" fill="none" stroke="#9c8049" stroke-width="1.6" marker-end="url(#aR7)"/>
+    <path d="M-28,78 A60 60 0 0 1 -78,28" fill="none" stroke="#9c8049" stroke-width="1.6" marker-end="url(#aR7)"/>
+    <path d="M-78,-28 A60 60 0 0 1 -28,-78" fill="none" stroke="#9c8049" stroke-width="1.6" marker-end="url(#aR7)"/>
+    <!-- the illicit shortcut: from data/evaluate back to hypothesis -->
+    <path d="M-86,34 C-30,150 70,120 90,38" fill="none" stroke="#c77b6b" stroke-width="2.4" stroke-dasharray="6 4" marker-end="url(#aRr)"/>
+    <text x="6" y="150" text-anchor="middle" fill="#e2a89b" font-size="10.5" font-weight="700">HARK: build hypothesis FROM results</text>
+  </g>
+  <!-- shakespeare spike -->
+  <g transform="translate(370,70)">
+    <text x="130" y="0" text-anchor="middle" fill="#c9a96e" font-size="11.5" font-weight="700">Wicherts’ illustration: pure noise</text>
+    <line x1="10" y1="120" x2="250" y2="120" stroke="#3a3025" stroke-width="1.2"/>
+    <line x1="10" y1="20" x2="10" y2="120" stroke="#3a3025" stroke-width="1.2"/>
+    <polyline points="10,80 30,70 50,90 70,65 90,95 110,72 130,88 148,30 168,92 188,68 208,86 230,74 250,82" fill="none" stroke="#b8b0a2" stroke-width="1.6"/>
+    <circle cx="148" cy="30" r="8" fill="none" stroke="#c77b6b" stroke-width="2"/>
+    <text x="148" y="18" text-anchor="middle" fill="#e2a89b" font-size="9.5" font-weight="700">spike @ t=148</text>
+    <text x="130" y="140" text-anchor="middle" fill="#8a8073" font-size="9.5">“explained” by Shakespeare’s Sonnet 148…</text>
+    <text x="130" y="153" text-anchor="middle" fill="#8a8073" font-size="9.5">— but it is <tspan fill="#e2a89b">mere chance.</tspan></text>
+  </g>
+  <!-- stat + outcome switching -->
+  <rect x="370" y="238" width="260" height="56" rx="10" fill="#1c1916" stroke="#3a3025"/>
+  <text x="500" y="260" text-anchor="middle" fill="#e3c891" font-size="20" font-weight="700">~30%</text>
+  <text x="500" y="280" text-anchor="middle" fill="#b8b0a2" font-size="10.5">of psychologists admit to HARKing</text>
+  <!-- bottom -->
+  <rect x="50" y="362" width="580" height="80" rx="12" fill="#15120f" stroke="#3a3025"/>
+  <text x="70" y="386" fill="#c9a96e" font-size="12.5" font-weight="700">CONSEQUENCE &amp; A SPECIAL CASE</text>
+  <text x="70" y="407" fill="#b8b0a2" font-size="12">Exploration selects RANDOM bumps, then a story is found to fit — almost guaranteed <tspan fill="#e3c891" font-weight="700">not to replicate.</tspan></text>
+  <text x="70" y="424" fill="#8a8073" font-size="11.5">Special case = <tspan fill="#e2a89b" font-weight="700">outcome switching</tspan> in RCTs: swapping pre-registered primary/secondary outcomes when reporting.</text>
+ </svg>`,
+ points:[
+  ['1','<b>HARKing = Hypothesizing After Results are Known (Kerr, 1998).</b> You explore the data, find a pattern, then present it as if it were your a-priori prediction.'],
+  ['2','<b>The Sonnet-148 demo.</b> Wicherts simulated pure white noise, spotted a random spike at t=148, and “explained” it with Shakespeare’s 148th sonnet — it was nothing but chance.'],
+  ['3','<b>Why it’s damaging.</b> Selecting for random extremes inflates false-positive rates, significance, and effect sizes — the “finding” won’t survive a fresh sample.'],
+  ['4','<b>It’s common.</b> Around 30% of surveyed psychologists admit to having done it; the universal H-D write-up style hides how often it happens.'],
+  ['5','<b>Special case: outcome switching.</b> In RCTs, swapping which outcome is “primary” after seeing results — detectable because trials are pre-registered.']
+ ],
+ hook:'HARK = drawing the target around the arrow after it lands. The spike at t=148 “meant” Shakespeare… but it was just noise.',
+ exam:'Pin down the contrast with p-hacking (next lesson): in <b>HARKing the HYPOTHESIS is built from the data</b>; in p-hacking the <b>ANALYSIS</b> is. Outcome switching is the textbook RCT example of HARKing.'
+});
+/* ============================================================ L8 */
+LESSONS.push({
+ id:'phack', sec:'Questionable Research Practices', tag:'p-hacking',
+ cardTitle:'p-hacking & Researcher DoF',
+ blurb:'Torture the data through its many analytic “degrees of freedom” until p slips below .05.',
+ title:'<em>p</em>-hacking &amp; Researcher Degrees of Freedom',
+ cap:'Simmons et al. (2011); Wicherts et al. — ≥15 analytic choices per experiment. The “garden of forking paths.”',
+ svg:`<svg viewBox="0 0 680 470" role="img" aria-label="Garden of forking analytic paths leading to p below .05">
+  <defs><marker id="aR8" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8z" fill="#9c8049"/></marker></defs>
+  <text x="340" y="28" text-anchor="middle" class="svg-title" fill="#e3c891" font-size="19">The “garden of forking paths”</text>
+  <!-- start -->
+  <rect x="30" y="120" width="92" height="40" rx="8" fill="#221e19" stroke="#c9a96e" stroke-width="1.5"/>
+  <text x="76" y="138" text-anchor="middle" fill="#e3c891" font-size="11" font-weight="700">Raw data</text>
+  <text x="76" y="153" text-anchor="middle" fill="#8a8073" font-size="9">p = .21 (n.s.)</text>
+  <!-- forking decisions -->
+  <g font-size="9.5" fill="#b8b0a2">
+    <line x1="122" y1="140" x2="180" y2="70" stroke="#9c8049" stroke-width="1.3" marker-end="url(#aR8)"/>
+    <line x1="122" y1="140" x2="180" y2="140" stroke="#9c8049" stroke-width="1.3" marker-end="url(#aR8)"/>
+    <line x1="122" y1="140" x2="180" y2="210" stroke="#9c8049" stroke-width="1.3" marker-end="url(#aR8)"/>
+    <rect x="182" y="55" width="120" height="30" rx="6" fill="#1c1916" stroke="#3a3025"/><text x="242" y="74" text-anchor="middle">drop 2 outliers</text>
+    <rect x="182" y="125" width="120" height="30" rx="6" fill="#1c1916" stroke="#3a3025"/><text x="242" y="144" text-anchor="middle">add covariate (age)</text>
+    <rect x="182" y="195" width="120" height="30" rx="6" fill="#1c1916" stroke="#3a3025"/><text x="242" y="214" text-anchor="middle">log-transform DV</text>
+    <line x1="302" y1="70" x2="360" y2="60" stroke="#9c8049" stroke-width="1.2" marker-end="url(#aR8)"/>
+    <line x1="302" y1="70" x2="360" y2="110" stroke="#9c8049" stroke-width="1.2" marker-end="url(#aR8)"/>
+    <line x1="302" y1="140" x2="360" y2="110" stroke="#9c8049" stroke-width="1.2" marker-end="url(#aR8)"/>
+    <line x1="302" y1="140" x2="360" y2="170" stroke="#9c8049" stroke-width="1.2" marker-end="url(#aR8)"/>
+    <line x1="302" y1="210" x2="360" y2="170" stroke="#9c8049" stroke-width="1.2" marker-end="url(#aR8)"/>
+    <line x1="302" y1="210" x2="360" y2="225" stroke="#9c8049" stroke-width="1.2" marker-end="url(#aR8)"/>
+    <rect x="362" y="48" width="92" height="26" rx="6" fill="#2a1c19" stroke="#5e372e"/><text x="408" y="65" text-anchor="middle" fill="#caa">p=.14</text>
+    <rect x="362" y="97" width="92" height="26" rx="6" fill="#1c2a1d" stroke="#6fae73"/><text x="408" y="114" text-anchor="middle" fill="#9fd6a2" font-weight="700">p=.04 ✓</text>
+    <rect x="362" y="157" width="92" height="26" rx="6" fill="#2a1c19" stroke="#5e372e"/><text x="408" y="174" text-anchor="middle" fill="#caa">p=.31</text>
+    <rect x="362" y="213" width="92" height="26" rx="6" fill="#1c2a1d" stroke="#6fae73"/><text x="408" y="230" text-anchor="middle" fill="#9fd6a2" font-weight="700">p=.02 ✓</text>
+  </g>
+  <line x1="454" y1="110" x2="510" y2="135" stroke="#6fae73" stroke-width="1.8" marker-end="url(#aR8)"/>
+  <line x1="454" y1="226" x2="510" y2="150" stroke="#6fae73" stroke-width="1.8" marker-end="url(#aR8)"/>
+  <rect x="512" y="120" width="130" height="50" rx="9" fill="#1c2a1d" stroke="#6fae73" stroke-width="1.6"/>
+  <text x="577" y="142" text-anchor="middle" fill="#9fd6a2" font-size="11.5" font-weight="700">Report ONLY</text>
+  <text x="577" y="159" text-anchor="middle" fill="#9fd6a2" font-size="11.5" font-weight="700">the p&lt;.05 path</text>
+  <!-- p-curve spike -->
+  <g transform="translate(60,272)">
+    <text x="120" y="0" text-anchor="middle" fill="#c9a96e" font-size="11" font-weight="700">Fingerprint: too many p just under .05</text>
+    <line x1="10" y1="70" x2="240" y2="70" stroke="#3a3025" stroke-width="1.2"/>
+    ${[['.01',30],['.02',34],['.03',40],['.04',46],['.049',12]].map((d,i)=>{const x=20+i*44;const h=d[1];return `<rect x="${x}" y="${70-h}" width="30" height="${h}" rx="3" fill="${i===4?'#c77b6b':'#9c8049'}"/><text x="${x+15}" y="84" text-anchor="middle" fill="#8a8073" font-size="9">${d[0]}</text>`;}).join('')}
+    <line x1="218" y1="14" x2="218" y2="72" stroke="#c77b6b" stroke-width="1.2" stroke-dasharray="3 2"/>
+    <text x="222" y="22" fill="#e2a89b" font-size="9">.05 cliff</text>
+  </g>
+  <!-- distinction -->
+  <rect x="330" y="272" width="312" height="86" rx="11" fill="#15120f" stroke="#9c8049" stroke-width="1.3"/>
+  <text x="350" y="294" fill="#c9a96e" font-size="11.5" font-weight="700">HARKing vs p-HACKING</text>
+  <text x="350" y="314" fill="#b8b0a2" font-size="11">HARKing → the <tspan fill="#e3c891" font-weight="700">hypothesis</tspan> comes from the data.</text>
+  <text x="350" y="332" fill="#b8b0a2" font-size="11">p-hacking → the <tspan fill="#e3c891" font-weight="700">analysis</tspan> comes from the data.</text>
+  <text x="350" y="350" fill="#8a8073" font-size="10.5">Both = overfitting → won’t replicate.</text>
+  <!-- bottom -->
+  <rect x="60" y="372" width="582" height="68" rx="12" fill="#1c1916" stroke="#3a3025"/>
+  <text x="80" y="395" fill="#c9a96e" font-size="12" font-weight="700">≥ 15 analytic “degrees of freedom” in a typical experiment</text>
+  <text x="80" y="415" fill="#b8b0a2" font-size="11.5">outliers · missing data · covariates · DV scoring · estimator · inclusion criteria · stopping rule …</text>
+  <text x="80" y="432" fill="#8a8073" font-size="11">Used opportunistically, they push the false-positive rate FAR above the nominal 5%.</text>
+ </svg>`,
+ points:[
+  ['1','<b>Researcher degrees of freedom.</b> A typical experiment hides ≥15 defensible analytic choices: outliers, missing data, covariates, how the DV is scored, which estimator, inclusion criteria…'],
+  ['2','<b>p-hacking.</b> Making those choices in a <i>data-driven</i> way to chase a significant (or otherwise desirable) result — also called significance chasing.'],
+  ['3','<b>It inflates false positives.</b> The real false-positive rate climbs far above the nominal 5%; weak effects in small samples get especially exaggerated.'],
+  ['4','<b>The fingerprint.</b> An unusual pile-up of p-values just below .05 (Masicampo &amp; Lalande) signals p-hacking across a literature.'],
+  ['5','<b>HARKing ≠ p-hacking.</b> HARKing builds the <i>hypothesis</i> from data; p-hacking builds the <i>analysis</i> from data. Both are overfitting → poor replicability.']
+ ],
+ hook:'“Torture the data until they confess.” The garden of forking paths always has a route to p<.05 — if you’re allowed to choose the path after looking.',
+ exam:'Know the headline number (~15 analytic choices) and the p-just-below-.05 spike as evidence. The crisp one-liner examiners want: <b>HARKing = data→hypothesis; p-hacking = data→analysis.</b>'
+});
+/* ============================================================ L9 */
+LESSONS.push({
+ id:'stopping', sec:'Questionable Research Practices', tag:'Optional Stopping',
+ cardTitle:'Optional Stopping (Data Peeking)',
+ blurb:'Keep testing, peek at the p-value, and stop the moment it dips under .05. A near-guaranteed false positive.',
+ title:'<em>Optional Stopping</em> &amp; Data Peeking',
+ cap:'Lecture 4 concept; Wagenmakers et al. (2012). The Bayes factor is immune (Edwards, Lindman &amp; Savage, 1963).',
+ svg:`<svg viewBox="0 0 680 470" role="img" aria-label="Optional stopping p-value walk crossing 0.05">
+  <text x="340" y="28" text-anchor="middle" class="svg-title" fill="#e3c891" font-size="19">Peek → test → peek → STOP when p&lt;.05</text>
+  <!-- chart -->
+  <g transform="translate(60,55)">
+    <line x1="0" y1="0" x2="0" y2="230" stroke="#3a3025" stroke-width="1.4"/>
+    <line x1="0" y1="230" x2="560" y2="230" stroke="#3a3025" stroke-width="1.4"/>
+    <text x="-8" y="10" text-anchor="end" fill="#8a8073" font-size="10">p=1</text>
+    <text x="-8" y="232" text-anchor="end" fill="#8a8073" font-size="10">p=0</text>
+    <text x="560" y="248" text-anchor="end" fill="#8a8073" font-size="10.5">participants added →</text>
+    <!-- .05 threshold near bottom -->
+    <line x1="0" y1="200" x2="560" y2="200" stroke="#c77b6b" stroke-width="1.4" stroke-dasharray="6 4"/>
+    <text x="565" y="204" fill="#e2a89b" font-size="10">α = .05</text>
+    <!-- random walk of p -->
+    <polyline points="0,40 50,70 100,55 150,110 200,90 250,150 300,130 350,175 400,150 440,205 460,150 500,120 560,100" fill="none" stroke="#c9a96e" stroke-width="2.3"/>
+    <!-- peeks -->
+    ${[[50,70],[150,110],[250,150],[350,175],[440,205]].map((p,i)=>`<circle cx="${p[0]}" cy="${p[1]}" r="4.5" fill="#7fa6c9"/><text x="${p[0]}" y="${p[1]-9}" text-anchor="middle" fill="#9fc0e0" font-size="8.5">peek</text>`).join('')}
+    <!-- stop point -->
+    <circle cx="440" cy="205" r="8" fill="#6fae73"/>
+    <text x="440" y="226" text-anchor="middle" fill="#9fd6a2" font-size="10" font-weight="700">STOP! “significant”</text>
+    <!-- continued path ghost -->
+    <text x="505" y="95" fill="#8a8073" font-size="9.5">…had they continued,</text>
+    <text x="505" y="108" fill="#8a8073" font-size="9.5">p drifts back up</text>
+  </g>
+  <!-- left consequence -->
+  <rect x="60" y="318" width="280" height="58" rx="10" fill="#2a1c19" stroke="#c77b6b" stroke-width="1.3"/>
+  <text x="80" y="340" fill="#e2a89b" font-size="12" font-weight="700">⚠ INFLATED TYPE I ERROR</text>
+  <text x="80" y="360" fill="#b8b0a2" font-size="11">Repeated peeking guarantees you eventually</text>
+  <text x="80" y="375" fill="#b8b0a2" font-size="11">cross .05 by chance — even with NO real effect.</text>
+  <!-- right fix -->
+  <rect x="356" y="318" width="284" height="58" rx="10" fill="#1c2a1d" stroke="#6fae73" stroke-width="1.3"/>
+  <text x="376" y="340" fill="#9fd6a2" font-size="12" font-weight="700">✓ FIXES</text>
+  <text x="376" y="360" fill="#b8b0a2" font-size="11">Pre-specify N · OR use the Bayes factor —</text>
+  <text x="376" y="375" fill="#b8b0a2" font-size="11">stopping rules don’t bias it.</text>
+  <!-- bottom quote -->
+  <rect x="60" y="388" width="580" height="54" rx="11" fill="#15120f" stroke="#3a3025"/>
+  <text x="80" y="410" fill="#c9a96e" font-size="11.5" font-weight="700">EDWARDS, LINDMAN &amp; SAVAGE (1963)</text>
+  <text x="80" y="430" fill="#b8b0a2" font-size="11.5" font-style="italic">“The rules governing when data collection stops are irrelevant to data interpretation.” — true for Bayes factors, NOT p-values.</text>
+ </svg>`,
+ points:[
+  ['1','<b>Optional stopping.</b> Running participants while repeatedly checking the p-value, and stopping the instant it dips below .05 (a.k.a. data peeking).'],
+  ['2','<b>Why it’s a QRP.</b> With enough peeks you’ll cross .05 by chance even when the true effect is zero — so Type I error is badly inflated.'],
+  ['3','<b>p-values are sensitive to it.</b> Their Type I/II interpretation assumes a <i>fixed</i> sample size decided in advance; peeking voids that guarantee.'],
+  ['4','<b>The frequentist fix.</b> Pre-specify the exact N (or a corrected sequential plan) in your preregistration — then stick to it.'],
+  ['5','<b>The Bayesian escape.</b> The <b>Bayes factor</b> is immune: “the rules governing when data collection stops are irrelevant” (Edwards et al., 1963). Evidence can be monitored as data accumulate.']
+ ],
+ hook:'A p-value on a leash you keep yanking will eventually wander under .05. Decide N before you start — or switch to Bayes, where stopping doesn’t cheat.',
+ exam:'This is why Wagenmakers used the <b>Bayes factor</b> in the Bem replication — it let them monitor evidence as data came in without pre-committing to N. For p-values, optional stopping inflates Type I error; that’s the examinable point.'
+});
+
+/* ============================================================ L10 */
+LESSONS.push({
+ id:'human', sec:'Human Factors', tag:'Researchers Are Only Human',
+ cardTitle:'Researchers Are Only Human',
+ blurb:'Most QRPs aren’t fraud. They’re honest people, a flexible situation, and a moral compass that bends just a little.',
+ title:'Researchers Are <em>Only Human</em>',
+ cap:'Wicherts (2017); the dice-under-cup study (Shalvi et al.) and Anderson et al.’s NIH norms survey.',
+ svg:`<svg viewBox="0 0 680 470" role="img" aria-label="The dice experiment and norms survey">
+  <text x="340" y="28" text-anchor="middle" class="svg-title" fill="#e3c891" font-size="19">Honest people bend the rules — when given a reason</text>
+  <!-- dice experiment -->
+  <text x="185" y="60" text-anchor="middle" fill="#c9a96e" font-size="12.5" font-weight="700">THE DICE-UNDER-A-CUP STUDY</text>
+  <!-- throw once -->
+  <g transform="translate(40,72)">
+    <rect x="0" y="0" width="150" height="118" rx="10" fill="#1c2a1d" stroke="#6fae73" stroke-width="1.4"/>
+    <text x="75" y="22" text-anchor="middle" fill="#9fd6a2" font-size="11.5" font-weight="700">Throw ONCE</text>
+    <rect x="55" y="34" width="40" height="40" rx="7" fill="#221e19" stroke="#9c8049"/>
+    ${[[68,47],[82,47],[68,61],[82,61],[75,54]].map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="2.6" fill="#e3c891"/>`).join('')}
+    <text x="75" y="92" text-anchor="middle" fill="#b8b0a2" font-size="10.5">reports honestly →</text>
+    <text x="75" y="107" text-anchor="middle" fill="#9fd6a2" font-size="10.5" font-weight="700">uniform distribution</text>
+  </g>
+  <!-- throw thrice -->
+  <g transform="translate(210,72)">
+    <rect x="0" y="0" width="150" height="118" rx="10" fill="#2a1c19" stroke="#c77b6b" stroke-width="1.4"/>
+    <text x="75" y="22" text-anchor="middle" fill="#e2a89b" font-size="11.5" font-weight="700">Throw MANY times</text>
+    <rect x="30" y="34" width="26" height="26" rx="5" fill="#221e19" stroke="#9c8049"/><circle cx="43" cy="47" r="2.4" fill="#e3c891"/>
+    <rect x="62" y="34" width="26" height="26" rx="5" fill="#221e19" stroke="#9c8049"/>${[[71,43],[79,51],[75,47]].map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="2.2" fill="#e3c891"/>`).join('')}
+    <rect x="94" y="34" width="26" height="26" rx="5" fill="#221e19" stroke="#9c8049"/>${[[101,40],[113,40],[101,47],[113,47],[101,54],[113,54]].map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="2" fill="#e3c891"/>`).join('')}
+    <text x="75" y="92" text-anchor="middle" fill="#b8b0a2" font-size="10.5">reports the HIGHEST →</text>
+    <text x="75" y="107" text-anchor="middle" fill="#e2a89b" font-size="10.5" font-weight="700">skewed toward 6</text>
+  </g>
+  <text x="185" y="208" text-anchor="middle" fill="#8a8073" font-size="10.5">“That higher throw could have been the first one…” = a justification to lie guilt-free.</text>
+  <!-- analogy arrow -->
+  <line x1="370" y1="130" x2="410" y2="130" stroke="#c9a96e" stroke-width="1.6" marker-end="url(#aR3)"/>
+  <g transform="translate(412,72)">
+    <rect x="0" y="0" width="226" height="118" rx="10" fill="#15120f" stroke="#9c8049" stroke-width="1.3"/>
+    <text x="113" y="22" text-anchor="middle" fill="#c9a96e" font-size="11.5" font-weight="700">= RE-ANALYSING DATA</text>
+    <text x="113" y="44" text-anchor="middle" fill="#b8b0a2" font-size="10.5">Running an analysis many ways is</text>
+    <text x="113" y="60" text-anchor="middle" fill="#b8b0a2" font-size="10.5">“like throwing a die” — quick, repeatable,</text>
+    <text x="113" y="76" text-anchor="middle" fill="#b8b0a2" font-size="10.5">incentivised, and “others would too.”</text>
+    <text x="113" y="98" text-anchor="middle" fill="#e3c891" font-size="10.5" font-weight="700">“That 2nd analysis could’ve been</text>
+    <text x="113" y="113" text-anchor="middle" fill="#e3c891" font-size="10.5" font-weight="700">the first — so why not report it?”</text>
+  </g>
+  <!-- norms survey -->
+  <text x="340" y="240" text-anchor="middle" fill="#c9a96e" font-size="12.5" font-weight="700">ANDERSON et al. — NIH norms survey (3,000+ researchers)</text>
+  ${[['90%+','SUBSCRIBE to the good norms of science','#6fae73','#1c2a1d'],['~30%','admit they don’t always BEHAVE by them','#9c8049','#1c1916'],['60%+','think their PEERS are “in it for the money”','#c77b6b','#2a1c19']].map((d,i)=>{const x=55+i*200;return `<g transform="translate(${x},255)"><rect x="0" y="0" width="180" height="74" rx="10" fill="${d[3]}" stroke="${d[2]}" stroke-width="1.4"/><text x="90" y="32" text-anchor="middle" fill="${d[2]==='#9c8049'?'#e3c891':d[2]}" font-size="22" font-weight="700">${d[0]}</text><text x="90" y="52" text-anchor="middle" fill="#b8b0a2" font-size="10">${d[1].split(' ').slice(0,4).join(' ')}</text><text x="90" y="66" text-anchor="middle" fill="#b8b0a2" font-size="10">${d[1].split(' ').slice(4).join(' ')}</text></g>`;}).join('')}
+  <!-- bottom -->
+  <rect x="55" y="346" width="570" height="96" rx="12" fill="#15120f" stroke="#3a3025"/>
+  <text x="75" y="370" fill="#c9a96e" font-size="12.5" font-weight="700">THE TAKEAWAY — it’s the system, not “evil geniuses”</text>
+  <text x="75" y="392" fill="#b8b0a2" font-size="12">QRPs are <tspan fill="#e3c891" font-weight="700">ecologically rational</tspan>: they maximise the researcher’s proximal goal (publish &amp; survive).</text>
+  <text x="75" y="411" fill="#b8b0a2" font-size="12">Confirmation bias + hindsight bias + poor statistical intuition make exploratory results <tspan fill="#ece6db">feel</tspan> sensible.</text>
+  <text x="75" y="430" fill="#8a8073" font-size="11.5">“Torture the data until they confess” — given as well-meant advice. The fix targets <tspan fill="#e3c891">incentives,</tspan> not morals.</text>
+ </svg>`,
+ points:[
+  ['1','<b>The dice study.</b> Throw a die once under a cup and people report honestly (uniform). Allowed to throw <i>several</i> times, they report the highest — lying a little, guilt-free.'],
+  ['2','<b>The justification loophole.</b> “That higher number could have been my first throw” gives a story that protects the honest self-image — so the small lie feels acceptable.'],
+  ['3','<b>Re-analysis is throwing the die.</b> Running an analysis many ways is quick, repeatable, and incentivised; “that second analysis could have been the first” excuses reporting it.'],
+  ['4','<b>Norms vs behaviour (Anderson et al.).</b> 90%+ of researchers endorse good scientific norms, ~30% admit they don’t always follow them, and 60%+ believe peers value money/quantity over truth.'],
+  ['5','<b>Ecologically rational, not evil.</b> QRPs maximise the researcher’s proximal goal (publish, get tenure); fixing science means fixing <i>incentives</i>, not lecturing on morals.']
+ ],
+ hook:'One throw = honesty; many throws = “well, it COULD have been a six.” Re-running an analysis is just throwing the die again.',
+ exam:'Use the dice experiment to explain WHY good people p-hack: ambiguity + justification + incentives + “others do it too.” Pair it with Anderson’s norms-vs-behaviour gap. The moral: change the incentive structure.'
+});
+/* ============================================================ L11 */
+LESSONS.push({
+ id:'prereg', sec:'The Cure', tag:'Preregistration & Registered Reports',
+ cardTitle:'Preregistration & Registered Reports',
+ blurb:'Lock your hypotheses, design and analysis BEFORE the data. Registered Reports go further: peer-review the plan, not the result.',
+ title:'Preregistration &amp; <em>Registered Reports</em>',
+ cap:'Wagenmakers et al. (2012); Wicherts (2017). The single most effective antidote to HARKing, p-hacking &amp; selective reporting.',
+ svg:`<svg viewBox="0 0 680 470" role="img" aria-label="Standard vs preregistered vs registered report timelines">
+  <defs><marker id="aR11" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0L9 4.5L0 9z" fill="#c9a96e"/></marker></defs>
+  <text x="340" y="28" text-anchor="middle" class="svg-title" fill="#e3c891" font-size="19">Fix the plan before the data exist</text>
+  <!-- STANDARD -->
+  <text x="60" y="62" fill="#c77b6b" font-size="11.5" font-weight="700">① STANDARD (room to bias)</text>
+  <g transform="translate(60,72)">
+    ${['Collect data','Choose analysis\n(flexible)','Publish if\npositive'].map((t,i)=>{const x=i*150;const lines=t.split('\n');return `<rect x="${x}" y="0" width="120" height="40" rx="7" fill="#1c1916" stroke="#5e372e" stroke-width="1.3"/>${lines.map((l,j)=>`<text x="${x+60}" y="${lines.length>1?17+j*15:24}" text-anchor="middle" fill="#b8b0a2" font-size="10.5">${l}</text>`).join('')}${i<2?`<line x1="${x+120}" y1="20" x2="${x+150}" y2="20" stroke="#5e372e" stroke-width="1.4" marker-end="url(#aR11)"/>`:''}`;}).join('')}
+  </g>
+  <text x="510" y="96" fill="#c77b6b" font-size="10">⚠ HARK / p-hack / file-drawer all possible</text>
+  <!-- PREREGISTERED -->
+  <text x="60" y="138" fill="#9c8049" font-size="11.5" font-weight="700">② PREREGISTRATION</text>
+  <g transform="translate(60,148)">
+    <rect x="0" y="0" width="150" height="40" rx="7" fill="#221e19" stroke="#c9a96e" stroke-width="1.6"/>
+    <text x="75" y="17" text-anchor="middle" fill="#e3c891" font-size="10.5" font-weight="700">🔒 LOCK plan</text>
+    <text x="75" y="31" text-anchor="middle" fill="#b8b0a2" font-size="9">hypotheses·design·analysis·N</text>
+    <line x1="150" y1="20" x2="180" y2="20" stroke="#c9a96e" stroke-width="1.4" marker-end="url(#aR11)"/>
+    ${['Collect data','Run pre-set\nanalysis','Publish'].map((t,i)=>{const x=180+i*135;const lines=t.split('\n');return `<rect x="${x}" y="0" width="105" height="40" rx="7" fill="#1c1916" stroke="#3a3025" stroke-width="1.2"/>${lines.map((l,j)=>`<text x="${x+52}" y="${lines.length>1?17+j*15:24}" text-anchor="middle" fill="#b8b0a2" font-size="10">${l}</text>`).join('')}${i<2?`<line x1="${x+105}" y1="20" x2="${x+135}" y2="20" stroke="#9c8049" stroke-width="1.3" marker-end="url(#aR11)"/>`:''}`;}).join('')}
+  </g>
+  <text x="60" y="208" fill="#8a8073" font-size="10">Time-stamped &amp; public (e.g. OSF, osf.io) · must be specific enough to block bias re-entering (e.g. exact outlier rule).</text>
+  <!-- REGISTERED REPORT -->
+  <text x="60" y="244" fill="#6fae73" font-size="11.5" font-weight="700">③ REGISTERED REPORT (review the PLAN)</text>
+  <g transform="translate(60,254)">
+    <rect x="0" y="0" width="130" height="44" rx="7" fill="#1c2a1d" stroke="#6fae73" stroke-width="1.5"/>
+    <text x="65" y="19" text-anchor="middle" fill="#9fd6a2" font-size="10.5" font-weight="700">Write plan +</text>
+    <text x="65" y="34" text-anchor="middle" fill="#9fd6a2" font-size="10.5" font-weight="700">PEER REVIEW</text>
+    <line x1="130" y1="22" x2="158" y2="22" stroke="#6fae73" stroke-width="1.4" marker-end="url(#aR11)"/>
+    <rect x="160" y="0" width="130" height="44" rx="7" fill="#221e19" stroke="#c9a96e" stroke-width="1.4"/>
+    <text x="225" y="19" text-anchor="middle" fill="#e3c891" font-size="10.5" font-weight="700">In-principle</text>
+    <text x="225" y="34" text-anchor="middle" fill="#e3c891" font-size="10.5" font-weight="700">ACCEPTANCE</text>
+    <line x1="290" y1="22" x2="318" y2="22" stroke="#9c8049" stroke-width="1.3" marker-end="url(#aR11)"/>
+    <rect x="320" y="0" width="110" height="44" rx="7" fill="#1c1916" stroke="#3a3025"/>
+    <text x="375" y="19" text-anchor="middle" fill="#b8b0a2" font-size="10">Collect &amp;</text>
+    <text x="375" y="34" text-anchor="middle" fill="#b8b0a2" font-size="10">analyse</text>
+    <line x1="430" y1="22" x2="458" y2="22" stroke="#9c8049" stroke-width="1.3" marker-end="url(#aR11)"/>
+    <rect x="460" y="0" width="110" height="44" rx="7" fill="#1c2a1d" stroke="#6fae73" stroke-width="1.5"/>
+    <text x="515" y="19" text-anchor="middle" fill="#9fd6a2" font-size="10" font-weight="700">PUBLISHED —</text>
+    <text x="515" y="34" text-anchor="middle" fill="#9fd6a2" font-size="10" font-weight="700">result or not</text>
+  </g>
+  <!-- bottom -->
+  <rect x="60" y="320" width="560" height="122" rx="12" fill="#15120f" stroke="#3a3025"/>
+  <text x="80" y="344" fill="#c9a96e" font-size="12.5" font-weight="700">WHY REGISTERED REPORTS ARE SPECIAL</text>
+  <text x="80" y="365" fill="#b8b0a2" font-size="12">Reviewers judge the <tspan fill="#e3c891" font-weight="700">quality of the question &amp; method</tspan> — before any results exist — and catch flaws at</text>
+  <text x="80" y="383" fill="#b8b0a2" font-size="12">the moment they can still be fixed. Acceptance does NOT depend on how “nice” the results turn out.</text>
+  <text x="80" y="405" fill="#9fd6a2" font-size="12">✓ Kills HARKing &amp; p-hacking (plan is fixed)     ✓ Kills publication bias (nulls get published too).</text>
+  <text x="80" y="427" fill="#8a8073" font-size="11.5">You may still explore — but explorations must be <tspan fill="#e3c891">labelled separately</tspan> and confirmed in a fresh sample.</text>
+ </svg>`,
+ points:[
+  ['1','<b>Preregistration.</b> Before collecting data, publicly time-stamp your hypotheses, design, and full analysis plan (e.g. on the OSF, osf.io). It can’t be changed afterwards.'],
+  ['2','<b>It must be specific.</b> Vague plans let bias back in — e.g. you must state the exact outlier rule and stopping N, or you can still quietly try alternatives.'],
+  ['3','<b>Registered Reports go further.</b> Peer review happens on the <i>plan</i>. If reviewers like the question and method, you get <b>in-principle acceptance</b> before collecting data.'],
+  ['4','<b>Published regardless of result.</b> Because acceptance precedes the data, null results get published too — so Registered Reports also fight publication bias.'],
+  ['5','<b>Exploration still allowed.</b> A preregistered study can still report exploratory findings — but they must be flagged as exploratory and verified in a new sample.']
+ ],
+ hook:'Preregistration = sealing your predictions in an envelope before the game. Registered Report = the referee approves the rules before kickoff and promises to publish the final score either way.',
+ exam:'The exam favourite: Registered Reports defeat <b>two</b> problems at once — QRPs (plan locked) AND publication bias (accepted before results). Preregistration alone fixes the first; you still need willing journals for the second.'
+});
+/* ============================================================ L12 */
+LESSONS.push({
+ id:'opensci', sec:'The Cure', tag:'Open Science · Replication · Incentives',
+ cardTitle:'Open Science, Replication & Incentives',
+ blurb:'Transparency, sharing, replication and re-aligned rewards — the full workflow of fixes from design to publication.',
+ title:'Open Science, Replication &amp; <em>Incentives</em>',
+ cap:'Ioannidis et al. (2014), Fig. 2 — problems (red) and solutions (green) at every stage of the research workflow.',
+ svg:`<svg viewBox="0 0 680 470" role="img" aria-label="Workflow of problems and solutions">
+  <text x="340" y="26" text-anchor="middle" class="svg-title" fill="#e3c891" font-size="19">A fix at every stage of the workflow</text>
+  <!-- 4 stages -->
+  ${['DESIGN','CONDUCT','ANALYZE','REPORT'].map((s,i)=>{const x=45+i*155;return `<rect x="${x}" y="118" width="140" height="34" rx="8" fill="#221e19" stroke="#c9a96e" stroke-width="1.5"/><text x="${x+70}" y="140" text-anchor="middle" fill="#e3c891" font-size="13" font-weight="700">${s}</text>${i<3?`<text x="${x+148}" y="140" fill="#9c8049" font-size="16">→</text>`:''}`;}).join('')}
+  <!-- problems above (red) -->
+  <text x="40" y="58" fill="#c77b6b" font-size="11" font-weight="700">▲ PROBLEMS</text>
+  ${[['Not publishing\nnulls',45],['Under-\npowered N',200],['Data peeking /\noptional stop',355],['Selective &\nspun reporting',510]].map(([t,x])=>{const lines=t.split('\n');return `<rect x="${x}" y="66" width="140" height="42" rx="7" fill="#2a1c19" stroke="#5e372e" stroke-width="1.2"/>${lines.map((l,j)=>`<text x="${x+70}" y="${84+j*15}" text-anchor="middle" fill="#e2a89b" font-size="10">${l}</text>`).join('')}`;}).join('')}
+  <!-- solutions below (green) -->
+  <text x="40" y="178" fill="#6fae73" font-size="11" font-weight="700">▼ SOLUTIONS</text>
+  ${[['Register study +\nspecify analysis',45],['Open materials +\nblinding, power',200],['Pre-set stop rules /\nhold-out samples',355],['Open data +\nReplication',510]].map(([t,x])=>{const lines=t.split('\n');return `<rect x="${x}" y="186" width="140" height="42" rx="7" fill="#1c2a1d" stroke="#6fae73" stroke-width="1.2"/>${lines.map((l,j)=>`<text x="${x+70}" y="${204+j*15}" text-anchor="middle" fill="#9fd6a2" font-size="10">${l}</text>`).join('')}`;}).join('')}
+  <line x1="115" y1="152" x2="115" y2="184" stroke="#3a3025" stroke-width="1" stroke-dasharray="2 3"/>
+  <line x1="270" y1="152" x2="270" y2="184" stroke="#3a3025" stroke-width="1" stroke-dasharray="2 3"/>
+  <line x1="425" y1="152" x2="425" y2="184" stroke="#3a3025" stroke-width="1" stroke-dasharray="2 3"/>
+  <line x1="580" y1="152" x2="580" y2="184" stroke="#3a3025" stroke-width="1" stroke-dasharray="2 3"/>
+  <!-- four pillars -->
+  ${[['🔍 TRANSPARENCY','Open data, materials &\ncode → enables scrutiny\n& re-analysis. Badges work.','#9c8049'],['🔁 REPLICATION','The “litmus test.” Repro\nProject, Many Labs, CREP.\nFund &amp; publish it.','#6fae73'],['⚖ INCENTIVES','Reward quality &amp; rigour,\nNOT quantity. Value sharing\n& reproducibility track-record.','#7fa6c9'],['📋 GUIDELINES','CONSORT · ARRIVE ·\nSTROBE · PRISMA. Power\n& Bayesian / hold-out tools.','#a98fc9']].map((d,i)=>{const x=45+i*155;const lines=d[1].split('\n');return `<g transform="translate(${x},250)"><rect x="0" y="0" width="140" height="92" rx="9" fill="#15120f" stroke="${d[2]}" stroke-width="1.3"/><text x="70" y="22" text-anchor="middle" fill="${d[2]==='#9c8049'?'#e3c891':d[2]}" font-size="10.5" font-weight="700">${d[0]}</text>${lines.map((l,j)=>`<text x="70" y="${42+j*15}" text-anchor="middle" fill="#b8b0a2" font-size="9.5">${l}</text>`).join('')}</g>`;}).join('')}
+  <!-- bottom -->
+  <rect x="45" y="356" width="595" height="86" rx="12" fill="#1c1916" stroke="#3a3025"/>
+  <text x="65" y="380" fill="#c9a96e" font-size="12.5" font-weight="700">THE ROOT FIX — REALIGN THE REWARDS</text>
+  <text x="65" y="401" fill="#b8b0a2" font-size="12">The primary currency of science is publication. While only <tspan fill="#e2a89b">novel &amp; positive</tspan> results are rewarded, biases persist.</text>
+  <text x="65" y="419" fill="#b8b0a2" font-size="12">Shift credit toward <tspan fill="#9fd6a2" font-weight="700">quality, reproducibility &amp; open sharing</tspan> — via journals, funders, institutions &amp; societies.</text>
+  <text x="65" y="436" fill="#8a8073" font-size="11">Post-publication peer review &amp; preprints add further self-correction. No single fix is enough — change is needed at every level.</text>
+ </svg>`,
+ points:[
+  ['1','<b>Transparency &amp; Open Science.</b> Share raw data, materials, and analysis code (OSF, Figshare, Dataverse, Dryad). Openness empowers scrutiny, re-analysis (reproducibility) and replication.'],
+  ['2','<b>Badges &amp; standards.</b> Open Data / Open Materials / Preregistration badges and disclosure checklists (e.g. Psychological Science) measurably nudge better practice.'],
+  ['3','<b>Replication is the litmus test.</b> Build it in via the Reproducibility Project, Many Labs, and teaching projects (CREP); fund it (NWO replication grants) and let journals welcome it.'],
+  ['4','<b>Reporting guidelines &amp; better stats.</b> CONSORT (trials), ARRIVE (animals), STROBE (observational), PRISMA (reviews); plus adequate power, Bayesian methods and hold-out/training-test samples.'],
+  ['5','<b>Re-align incentives.</b> The root cause is rewarding quantity and novelty. Shift credit to quality, reproducibility and sharing — across journals, funders, institutions and societies.']
+ ],
+ hook:'Four pillars hold up trustworthy science: Transparency, Replication, Incentives, Guidelines. The keystone is the incentive structure — reward rigour, not just novelty.',
+ exam:'If asked for “approaches to prevent bias,” give the structured list: registration/preregistration → transparency &amp; open data → replication → reporting guidelines → realigned incentives &amp; publication practices. Name at least one guideline and one repository.'
+});
+/* ============================================================ L13 */
+LESSONS.push({
+ id:'bem', sec:'Worked Example', tag:'Case Study — Bem ESP Replication',
+ cardTitle:'Case Study — Bem’s ESP & the Cure in Action',
+ blurb:'A claim that people can “feel the future,” and Wagenmakers’ preregistered Bayesian replication that shows how it should be done.',
+ title:'Case Study: <em>Feeling the Future?</em>',
+ cap:'Bem (2011) vs Wagenmakers et al. (2012) — exploratory hype meets a purely confirmatory test.',
+ svg:`<svg viewBox="0 0 680 470" role="img" aria-label="Bem ESP experiment and confirmatory Bayesian replication">
+  <text x="340" y="28" text-anchor="middle" class="svg-title" fill="#e3c891" font-size="19">When confirmatory method meets an extraordinary claim</text>
+  <!-- Bem claim -->
+  <g transform="translate(45,52)">
+    <rect x="0" y="0" width="285" height="150" rx="11" fill="#2a1c19" stroke="#c77b6b" stroke-width="1.4"/>
+    <text x="142" y="24" text-anchor="middle" fill="#e2a89b" font-size="12.5" font-weight="700">BEM (2011) — the claim</text>
+    <!-- two curtains -->
+    <rect x="60" y="38" width="50" height="62" rx="4" fill="#221e19" stroke="#9c8049"/><text x="85" y="73" text-anchor="middle" fill="#8a8073" font-size="9">curtain</text>
+    <rect x="175" y="38" width="50" height="62" rx="4" fill="#1c2a1d" stroke="#6fae73"/><text x="200" y="69" text-anchor="middle" fill="#9fd6a2" font-size="9">picture</text><text x="200" y="80" text-anchor="middle" fill="#9fd6a2" font-size="9">behind</text>
+    <text x="142" y="118" text-anchor="middle" fill="#b8b0a2" font-size="10.5">“Click the curtain hiding the picture.”</text>
+    <text x="142" y="135" text-anchor="middle" fill="#e3c891" font-size="11" font-weight="700">Chance = 50% · Bem found 53.1% (p&lt;.05)</text>
+  </g>
+  <!-- red flags -->
+  <g transform="translate(350,52)">
+    <rect x="0" y="0" width="285" height="150" rx="11" fill="#15120f" stroke="#9c8049" stroke-width="1.3"/>
+    <text x="142" y="24" text-anchor="middle" fill="#c9a96e" font-size="12" font-weight="700">…but the tell-tale red flags</text>
+    <text x="20" y="48" fill="#b8b0a2" font-size="10.5">• Effect ONLY for erotic pictures (not neutral)</text>
+    <text x="20" y="68" fill="#b8b0a2" font-size="10.5">• Extra claims: stronger for extraverts; sex diffs</text>
+    <text x="20" y="88" fill="#b8b0a2" font-size="10.5">• Pattern looks <tspan fill="#e2a89b">found in the data</tspan> (exploratory)</text>
+    <text x="20" y="108" fill="#b8b0a2" font-size="10.5">• …yet reported as a clean confirmatory test</text>
+    <text x="20" y="132" fill="#e3c891" font-size="10.5" font-weight="700">⇒ exactly the “fairy-tale factor”</text>
+  </g>
+  <!-- the cure -->
+  <g transform="translate(45,216)">
+    <rect x="0" y="0" width="590" height="140" rx="11" fill="#1c2a1d" stroke="#6fae73" stroke-width="1.5"/>
+    <text x="20" y="24" fill="#9fd6a2" font-size="12.5" font-weight="700">THE CURE — Wagenmakers et al.’s purely confirmatory replication</text>
+    <text x="20" y="46" fill="#b8b0a2" font-size="11">① Posted full design &amp; analysis plan online <tspan fill="#e3c891">before</tspan> testing a single participant (preregistered).</text>
+    <text x="20" y="66" fill="#b8b0a2" font-size="11">② Used the <tspan fill="#e3c891" font-weight="700">Bayes factor</tspan> — so optional stopping doesn’t bias it; evidence monitored as data accrue.</text>
+    <!-- BF mini chart -->
+    <g transform="translate(20,78)">
+      <line x1="0" y1="40" x2="200" y2="40" stroke="#3a3025" stroke-width="1.1"/>
+      <line x1="0" y1="6" x2="0" y2="52" stroke="#3a3025" stroke-width="1.1"/>
+      <polyline points="0,38 40,30 80,24 120,18 160,12 200,8" fill="none" stroke="#9fd6a2" stroke-width="2"/>
+      <text x="206" y="12" fill="#9fd6a2" font-size="9">evidence for H₀ ↑</text>
+    </g>
+    <text x="250" y="100" fill="#ece6db" font-size="12">③ Result: data <tspan fill="#9fd6a2" font-weight="700">16.6×</tspan> more likely under H₀ (no</text>
+    <text x="250" y="118" fill="#ece6db" font-size="12">precognition) than H₁ — with the default prior.</text>
+    <text x="250" y="134" fill="#8a8073" font-size="10.5">Everything was decided before the data: genuinely confirmatory.</text>
+  </g>
+  <text x="340" y="380" text-anchor="middle" fill="#c9a96e" font-size="12" font-weight="700">THE LESSON OF THE WHOLE THEME, IN ONE STUDY</text>
+  <rect x="45" y="390" width="590" height="52" rx="11" fill="#15120f" stroke="#3a3025"/>
+  <text x="64" y="412" fill="#b8b0a2" font-size="12">An extraordinary “confirmatory” claim built on exploratory flexibility evaporates under a <tspan fill="#e3c891" font-weight="700">preregistered</tspan></text>
+  <text x="64" y="430" fill="#b8b0a2" font-size="12">test with a stopping-proof statistic. Method, not message, is what makes evidence trustworthy.</text>
+ </svg>`,
+ points:[
+  ['1','<b>The claim.</b> Bem (2011) had participants guess which curtain hid a picture (chance = 50%) and reported 53.1% — “evidence” that people can feel the future.'],
+  ['2','<b>The red flags.</b> The effect appeared only for <i>erotic</i> images, with extra claims about extraverts and sex differences — patterns that look found-in-the-data (exploratory) yet sold as confirmatory.'],
+  ['3','<b>The fix: preregistration.</b> Wagenmakers et al. posted their full design and analysis plan online <i>before</i> running a single participant.'],
+  ['4','<b>The fix: Bayes factor.</b> They used a Bayes factor, which is immune to optional stopping, so they could watch the evidence accumulate without pre-committing to an exact N.'],
+  ['5','<b>The verdict.</b> The data were ~16.6× more likely under H₀ (no precognition) than under H₁ — a clean, purely confirmatory null. Method beats message.']
+ ],
+ hook:'Curtains, erotic pictures, and a 53.1% — vs a sealed preregistration and a Bayes factor of 16.6 for “nothing here.” This single study is the whole theme in miniature.',
+ exam:'Great all-purpose example: it ties together exploratory-vs-confirmatory, preregistration, optional stopping, and the Bayes factor. Remember BF≈16.6 in favour of H₀ and that the plan was posted <b>before</b> data collection.'
+});
+
+const FLASHCARDS=[
+ {topic:'Exploratory/Confirmatory',q:'What is purely <b>exploratory</b> research?',a:'Research where the <b>hypothesis is found in the data</b> after looking — post-hoc theorising, fishing, data dredging. Valuable for discovery, but its statistics are “wonky” and it must be <b>labelled as exploratory.</b>'},
+ {topic:'Exploratory/Confirmatory',q:'What is purely <b>confirmatory</b> research?',a:'Research where the <b>entire analysis plan is specified before</b> the first participant is run. Only here are p-values and Type I/II error rates valid (“sound stats”).'},
+ {topic:'Exploratory/Confirmatory',q:'State the statistical law about using data.',a:'For hypothesis testing, <b>data may be used only once.</b> Data that <i>suggested</i> a hypothesis cannot fairly <i>test</i> it — you need a fresh sample.'},
+ {topic:'Exploratory/Confirmatory',q:'What is “double-dipping”?',a:'Testing a hypothesis on the very data that inspired it (term from neuroimaging). It <b>inflates Type I error</b> and makes p-values untrustworthy.'},
+ {topic:'Exploratory/Confirmatory',q:'Confirmation <b>bias</b> vs confirmatory <b>research</b> — the difference?',a:'Confirmation bias is a <b>human tendency</b> to fine-tune toward a desired result. Confirmatory research is a <b>method</b> that <i>prevents</i> fine-tuning by fixing the plan in advance. Near-opposites.'},
+ {topic:'Replication Crisis',q:'Reproducibility Project (psychology): the key two numbers?',a:'Originals: <b>97%</b> significant. Replications: only <b>~36%</b> significant. 100 studies were re-run.'},
+ {topic:'Replication Crisis',q:'How low can biomedical replication rates go?',a:'Below 50% generally; cancer-biology findings replicated as low as <b>11%</b> (Begley &amp; Ellis; Prinz).'},
+ {topic:'Replication Crisis',q:'What proportion of psychology papers report positive results, and why is that a red flag?',a:'Over <b>90%</b> (Fanelli). Given typically low statistical power, such a high “success rate” is implausible — it signals filtering (publication bias) and inflation (p-hacking/HARKing).'},
+ {topic:'Replication Crisis',q:'Does a failed replication prove the original effect is false?',a:'No. It may be a <b>Type II error</b> (underpowered) or reflect a genuinely <b>moderated</b> effect (different context, sample, treatment). Replications guide, not condemn.'},
+ {topic:'Replication Crisis',q:'What was the “Many Labs” project?',a:'A large collaboration testing the same <b>13 effects</b> across 36 samples worldwide (n≈6,344) to gauge how robust and replicable each effect is.'},
+ {topic:'Confirmation Bias',q:'Name the three ways confirmation bias operates (Nickerson).',a:'(1) <b>Interpret</b> ambiguous info as supportive; (2) <b>search</b> for confirming evidence; (3) <b>remember</b> supporting info more easily.'},
+ {topic:'Confirmation Bias',q:'What is hindsight bias?',a:'Judging an event as more predictable <b>after</b> it occurred — “I knew it all along.” It makes a post-hoc story feel like a genuine prediction (fuels HARKing).'},
+ {topic:'Confirmation Bias',q:'Complete Feynman’s rule of scientific integrity.',a:'“You must not fool yourself — and you are the <b>easiest person to fool.</b>” Why honesty alone is not enough; structural safeguards are needed.'},
+ {topic:'Publication Bias',q:'What is publication bias / the file-drawer problem?',a:'Non-significant (null) studies are less likely to be published — authors don’t submit them and editors/reviewers reject them — so they sit in the “<b>file drawer</b>.” The visible literature is a biased, positive-only sample (Sterling 1959; Rosenthal 1979).'},
+ {topic:'Publication Bias',q:'How is publication bias detected across a literature?',a:'Tests of <b>small-study effects</b>, especially <b>funnel-plot asymmetry</b> (small studies showing larger effects). Visual reading alone is “precarious”; use statistical tests cautiously.'},
+ {topic:'Publication Bias',q:'What does publication bias do to estimated effect sizes?',a:'It <b>inflates</b> them: even genuine effects look bigger because only the luckier, larger estimates surface. Meta-analyses then overestimate the truth.'},
+ {topic:'Reporting Biases',q:'Selective <b>outcome</b> reporting vs selective <b>analysis</b> reporting?',a:'Outcome: measure many DVs, report only the significant one(s). Analysis: take <b>one</b> outcome and run it many ways (outliers, covariates, transforms), reporting the most impressive variant.'},
+ {topic:'Reporting Biases',q:'What real-world case shows selective reporting (FDA)?',a:'<b>Antidepressant trials (Turner et al.):</b> ~half were negative in FDA records, but those went unpublished or were spun positive — so the literature overstated efficacy. Same for antipsychotics.'},
+ {topic:'Reporting Biases',q:'What is time-lag bias?',a:'Negative/null results <i>are</i> eventually published, but with <b>greater delay</b> than positive results — so at any moment the literature looks more positive than it is.'},
+ {topic:'Reporting Biases',q:'What is the Proteus phenomenon?',a:'After an initial striking <b>positive</b> result, contradicting <b>negative</b> results become novel and are rushed out too — producing <b>rapidly alternating extreme results</b> before estimates settle. Named for the shape-shifting sea-god.'},
+ {topic:'QRPs',q:'What does HARKing stand for and mean?',a:'<b>Hypothesizing After the Results are Known</b> (Kerr, 1998): explore the data, find a pattern, then present it as if it were your a-priori prediction.'},
+ {topic:'QRPs',q:'Explain Wicherts’ Shakespeare “Sonnet 148” example.',a:'He simulated pure <b>white noise</b>, spotted a random spike at t=148, and “explained” it with Shakespeare’s 148th sonnet. It was <b>mere chance</b> — showing how HARKing finds narratives for random bumps.'},
+ {topic:'QRPs',q:'About what % of psychologists admit to HARKing?',a:'Around <b>30%</b> admit to having done it in anonymous surveys.'},
+ {topic:'QRPs',q:'What is outcome switching, and why is it detectable?',a:'A special case of HARKing in RCTs: swapping which outcome is reported as <b>primary vs secondary</b> after seeing results. Detectable because trials are <b>pre-registered</b> (you can compare plan to paper).'},
+ {topic:'QRPs',q:'What is p-hacking / researcher degrees of freedom?',a:'Exploiting the many defensible analytic choices (≥<b>15</b> in a typical experiment — outliers, covariates, DV scoring, estimator…) in a <b>data-driven</b> way to push p below .05.'},
+ {topic:'QRPs',q:'Crisp distinction: HARKing vs p-hacking?',a:'HARKing → the <b>hypothesis</b> is built from the data. p-hacking → the <b>analysis</b> is built from the data. Both are overfitting and won’t replicate.'},
+ {topic:'QRPs',q:'What statistical fingerprint reveals p-hacking in a literature?',a:'An unusual <b>pile-up of p-values just below .05</b> (Masicampo &amp; Lalande).'},
+ {topic:'QRPs',q:'What is optional stopping and why is it a problem?',a:'Repeatedly <b>peeking</b> at the p-value while adding participants and <b>stopping when p&lt;.05</b>. With enough peeks you cross .05 by chance even with no real effect → inflated Type I error. p-values assume a fixed N.'},
+ {topic:'QRPs',q:'Which statistic is immune to optional stopping, and the supporting quote?',a:'The <b>Bayes factor.</b> Edwards, Lindman &amp; Savage (1963): “the rules governing when data collection stops are <b>irrelevant</b> to data interpretation.” Evidence can be monitored as data accrue.'},
+ {topic:'Human Factors',q:'What does the dice-under-a-cup study show?',a:'Thrown <b>once</b>, people report honestly (uniform). Allowed <b>several</b> throws, they report the highest — lying a little, because “that throw could have been the first.” A justification makes a small transgression feel acceptable.'},
+ {topic:'Human Factors',q:'How is re-analysing data “like throwing a die”?',a:'It’s quick, repeatable, heavily incentivised (needs significance), and you assume others would do the same — so “that second analysis could have been the first” excuses reporting it. This is the psychology behind p-hacking.'},
+ {topic:'Human Factors',q:'What did Anderson et al.’s NIH norms survey find?',a:'90%+ <b>subscribe</b> to good scientific norms, ~30% admit they don’t always <b>behave</b> by them, and 60%+ think their <b>peers</b> value money/quantity over truth. The gap fuels QRPs under competition.'},
+ {topic:'Human Factors',q:'Why are QRPs called “ecologically rational”?',a:'Because they <b>maximise the researcher’s proximal goal</b> — getting published and surviving in academia. The fix targets <b>incentives</b>, not individual morality.'},
+ {topic:'Solutions',q:'What is preregistration?',a:'Publicly <b>time-stamping</b> your hypotheses, design, and full analysis plan (incl. exact N and outlier rules) on a repository like the <b>OSF</b> before collecting data. It cannot be changed afterwards.'},
+ {topic:'Solutions',q:'What is a Registered Report and what makes it powerful?',a:'Peer review happens on the <b>plan</b>, before data exist. If approved → <b>in-principle acceptance</b>, and the paper is <b>published regardless of the result.</b> It defeats both QRPs (plan locked) AND publication bias (nulls get published).'},
+ {topic:'Solutions',q:'Why must a preregistration be highly specific?',a:'Vague plans let bias back in. If you don’t state the exact outlier rule or stopping N, you can still quietly try alternatives in a goal-directed way — re-creating p-hacking.'},
+ {topic:'Solutions',q:'How does open data strengthen science (two “R”s)?',a:'Re-analysis of shared data strengthens <b>reproducibility</b>; replication in fresh samples strengthens <b>replicability.</b> Transparency empowers scrutiny — the key to trustworthiness.'},
+ {topic:'Solutions',q:'Name reporting guidelines for trials, animals, observational studies, and reviews.',a:'<b>CONSORT</b> (randomised trials), <b>ARRIVE</b> (animal studies), <b>STROBE</b> (observational), <b>PRISMA</b> (systematic reviews).'},
+ {topic:'Solutions',q:'What is the root-cause fix for bias in science?',a:'Re-align <b>incentives</b>: the currency of science is publication, and while only novel + positive results are rewarded, biases persist. Reward <b>quality, reproducibility and open sharing</b> instead — across journals, funders and institutions.'},
+ {topic:'Case Study',q:'What did Bem (2011) claim and find?',a:'That people can “feel the future.” In a curtain-guessing task (chance = 50%) participants scored <b>53.1%</b> (p&lt;.05) — but only for <b>erotic</b> images, with extra post-hoc claims (extraverts, sex differences).'},
+ {topic:'Case Study',q:'How did Wagenmakers et al. replicate Bem, and what did they find?',a:'A <b>purely confirmatory</b> replication: design &amp; analysis posted online <b>before</b> testing anyone, using a <b>Bayes factor</b> (immune to optional stopping). Result: data ~<b>16.6×</b> more likely under H₀ (no precognition) than H₁.'}
+];
+
+const MCQS=[
+ {topic:'Exploratory vs Confirmatory',
+  q:'A researcher runs a study, notices an unexpected pattern, builds a hypothesis around it, and writes it up as a clean prediction-and-test. Statistically, why is this problematic?',
+  opts:['It uses too large a sample','The same data both generated and tested the hypothesis (data used more than once)','Bayesian methods are inappropriate here','Confirmatory research is always invalid'],
+  correct:1,
+  exp:'For hypothesis testing, <b>data may be used only once.</b> Data that <i>suggested</i> a hypothesis cannot fairly test it — this is double-dipping, which inflates Type I error and makes the p-values “wonky.” The work is really exploratory dressed up as confirmatory.'},
+ {topic:'Key Distinction',
+  q:'Which best captures the difference between <i>confirmation bias</i> and <i>confirmatory research</i>?',
+  opts:['They are two names for the same thing','Confirmation bias is a method; confirmatory research is a cognitive error','Confirmation bias is a human tendency to fine-tune toward a wanted result; confirmatory research is a method that prevents this by fixing the plan in advance','Both refer to preregistration'],
+  correct:2,
+  exp:'A <b>bias</b> (tendency) vs a <b>method</b> (safeguard). Confirmatory research blocks confirmation bias precisely because the analysis steps are specified before data collection, leaving no room to fine-tune.'},
+ {topic:'Replication Crisis',
+  q:'In the Reproducibility Project: Psychology, roughly what share of the original studies vs replications reached significance?',
+  opts:['97% original → 36% replication','50% original → 50% replication','80% original → 75% replication','36% original → 97% replication'],
+  correct:0,
+  exp:'About <b>97%</b> of originals were significant but only <b>~36%</b> of replications were. The large gap is a central piece of evidence for the replication crisis.'},
+ {topic:'Replication Crisis',
+  q:'A direct replication fails to reach significance. What is the most accurate conclusion?',
+  opts:['The original effect is definitely false','The replication was definitely fraudulent','It may be a Type II error or a genuinely moderated effect — failure alone is not proof of no effect','Replications can never be informative'],
+  correct:2,
+  exp:'A non-significant replication can reflect <b>low power (Type II error)</b> or a real effect that is <b>moderated</b> by context, sample or treatment. Replications guide future work rather than simply condemning originals.'},
+ {topic:'Confirmation Bias',
+  q:'Which is NOT one of Nickerson’s three ways confirmation bias operates?',
+  opts:['Interpreting ambiguous evidence as supportive','Searching for confirming rather than disconfirming evidence','Remembering supporting information more easily','Randomly assigning participants to conditions'],
+  correct:3,
+  exp:'The three mechanisms are <b>interpret, search, remember</b> — all favouring one’s prior belief. Random assignment is a sound design feature, not a bias.'},
+ {topic:'Publication Bias',
+  q:'The “file-drawer problem” refers to:',
+  opts:['Losing raw data files','Null/non-significant studies remaining unpublished, biasing the visible literature toward positive results','Journals charging fees to file papers','Storing data on paper instead of digitally'],
+  correct:1,
+  exp:'Coined around Rosenthal (1979): null results sit in the “file drawer” because authors don’t submit them and editors/reviewers reject them. The published record is therefore a skewed, positive-only sample (also called study publication bias).'},
+ {topic:'Publication Bias',
+  q:'Which tool is most associated with detecting publication bias across a set of studies?',
+  opts:['A scatterplot of age vs score','Funnel-plot asymmetry / small-study effects','A Likert scale','A bar chart of sample sizes'],
+  correct:1,
+  exp:'<b>Funnel-plot asymmetry</b> (small studies showing larger effects) signals small-study effects/publication bias — though visual inspection alone is precarious and statistical tests should be used cautiously.'},
+ {topic:'Reporting Biases',
+  q:'A team measures six outcomes, finds one significant, and publishes only that one. This is:',
+  opts:['Selective outcome reporting','Optional stopping','The Proteus phenomenon','Random sampling'],
+  correct:0,
+  exp:'Reporting only the significant outcome among several measured is <b>selective outcome reporting.</b> (Selective <i>analysis</i> reporting would be running ONE outcome many different ways and reporting the best.)'},
+ {topic:'Reporting Biases',
+  q:'The antidepressant trials case (Turner et al.) is famous because comparing published papers to FDA records showed that:',
+  opts:['All trials were positive','Roughly half were negative in FDA records but were unpublished or spun as positive, overstating efficacy','The drugs had no side effects','Trials were never registered'],
+  correct:1,
+  exp:'About half the trials were <b>negative</b> in the FDA database, yet those negatives were unpublished or reframed as positive — so the published literature <b>overstated</b> the drugs’ benefits. A landmark demonstration of selective reporting.'},
+ {topic:'Proteus Phenomenon',
+  q:'“Rapidly alternating extreme results,” where a striking positive finding is quickly followed by a dramatic contradicting one, describes:',
+  opts:['p-hacking','The Proteus phenomenon','HARKing','Optional stopping'],
+  correct:1,
+  exp:'The <b>Proteus phenomenon</b> (named for the shape-shifting sea-god): early estimates on a topic swing between extremes because both the splashy positive and its dramatic refutation are novel enough to publish.'},
+ {topic:'HARKing',
+  q:'Wicherts’ Shakespeare “Sonnet 148” example is designed to illustrate that:',
+  opts:['Poetry improves statistics','HARKing finds a narrative to explain what is actually random noise','Large samples are unnecessary','Sonnets predict the future'],
+  correct:1,
+  exp:'He found a random spike at t=148 in pure white noise and “explained” it with the 148th sonnet — it was <b>mere chance.</b> HARKing selects for random bumps and invents a story, so such findings almost never replicate.'},
+ {topic:'HARKing vs p-hacking',
+  q:'What is the cleanest distinction between HARKing and p-hacking?',
+  opts:['HARKing is fraud; p-hacking is legal','In HARKing the hypothesis is built from the data; in p-hacking the analysis is built from the data','They are identical','HARKing only happens in physics'],
+  correct:1,
+  exp:'<b>HARKing → data shapes the HYPOTHESIS; p-hacking → data shapes the ANALYSIS.</b> Both are forms of overfitting that produce findings unlikely to survive a fresh sample.'},
+ {topic:'p-hacking',
+  q:'Roughly how many defensible analytic choices (“researcher degrees of freedom”) did Wicherts and colleagues identify in a typical psychology experiment?',
+  opts:['About 2','At least 15','Exactly 100','None'],
+  correct:1,
+  exp:'At least <b>15</b> — outliers, missing data, covariates, DV scoring, estimator choice, inclusion criteria, stopping rule, etc. Used opportunistically, they push the false-positive rate far above the nominal 5%.'},
+ {topic:'Optional Stopping',
+  q:'Why does optional stopping (peeking and stopping when p<.05) inflate false positives?',
+  opts:['It reduces the sample size below 30','p-values assume a fixed N; repeated peeking means you eventually cross .05 by chance even with no real effect','It always uses Bayesian priors','It violates random assignment'],
+  correct:1,
+  exp:'The Type I/II interpretation of p-values assumes the sample size was <b>fixed in advance.</b> Repeatedly testing and stopping at the first significant peek guarantees crossing .05 by chance — inflating Type I error.'},
+ {topic:'Optional Stopping',
+  q:'Which statistic did Wagenmakers et al. use precisely because it is NOT biased by optional stopping?',
+  opts:['The t-statistic','The Bayes factor','The chi-square','Cohen’s d'],
+  correct:1,
+  exp:'The <b>Bayes factor.</b> As Edwards, Lindman &amp; Savage (1963) noted, “the rules governing when data collection stops are irrelevant to data interpretation,” so evidence can be monitored as data accumulate.'},
+ {topic:'Human Factors',
+  q:'In the dice-under-a-cup study, honest participants lied for profit mainly when:',
+  opts:['They were paid in advance','They were allowed to throw several times, giving a justification (“that throw could have been the first”)','They were watched closely','The die was loaded'],
+  correct:1,
+  exp:'A single throw → honest (uniform) reports. <b>Multiple</b> throws gave a self-justification, so people reported the highest, lying guilt-free. Wicherts uses this to explain why honest researchers p-hack: re-running an analysis is “like throwing the die again.”'},
+ {topic:'Solutions',
+  q:'Which feature makes a Registered Report uniquely powerful against publication bias?',
+  opts:['It is published only if results are significant','Peer review and acceptance happen BEFORE data collection, so the paper is published regardless of the result','It forbids all exploratory analysis','It removes the need for peer review'],
+  correct:1,
+  exp:'Because reviewers approve the <b>plan</b> and grant in-principle acceptance before data exist, the study is published whether results are positive or null. This kills both QRPs (plan is locked) and publication bias (nulls appear too).'},
+ {topic:'Solutions',
+  q:'Which set correctly matches reporting guidelines to their domain?',
+  opts:['CONSORT = animals; ARRIVE = trials','ARRIVE = animal studies; CONSORT = randomised trials; PRISMA = systematic reviews','PRISMA = trials; STROBE = animals','All four are for genetics only'],
+  correct:1,
+  exp:'<b>CONSORT</b> (randomised trials), <b>ARRIVE</b> (animal studies), <b>STROBE</b> (observational research), <b>PRISMA</b> (systematic reviews). Knowing at least these pairings is exam-useful.'},
+ {topic:'Solutions',
+  q:'According to the readings, what is the ultimate root-cause fix for biases in science?',
+  opts:['Banning all exploratory research','Re-aligning incentives to reward quality, reproducibility and sharing rather than just novel, positive results','Eliminating peer review','Requiring larger fonts in papers'],
+  correct:1,
+  exp:'The currency of science is publication; while only <b>novel + positive</b> results are rewarded, biases persist. Realigning incentives — across journals, funders and institutions — toward quality, reproducibility and openness is the structural cure.'},
+ {topic:'Case Study',
+  q:'In Wagenmakers et al.’s confirmatory replication of Bem’s ESP study, the Bayes factor of ~16.6 meant:',
+  opts:['Strong evidence people can feel the future','The data were ~16.6× more likely under H₀ (no precognition) than under H₁','The sample was too small to interpret','Optional stopping had biased the result'],
+  correct:1,
+  exp:'A Bayes factor of ~<b>16.6 in favour of H₀</b> means the data were about 16.6 times more likely under “no precognition” than under the effect. With everything decided before data collection, it was a clean, purely confirmatory null.'}
+];
+
+
+/* ===================== ENGINE ===================== */
+let curLesson=0, fcState=[], fcFilterTopic='All', quizState=[];
+
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+
+/* nav */
+$$('#nav button').forEach(b=>b.onclick=()=>switchView(b.dataset.view));
+function switchView(v){
+  $$('#nav button').forEach(x=>x.classList.toggle('active',x.dataset.view===v));
+  $$('.view').forEach(x=>x.classList.remove('active'));
+  $('#view-'+v).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* OVERVIEW */
+function buildOverview(){
+  $('#navLcount').textContent=LESSONS.length;
+  $('#navFcount').textContent=FLASHCARDS.length;
+  $('#navQcount').textContent=MCQS.length;
+  const tags=['Exploratory vs confirmatory','Replication crisis','Confirmation bias','Publication bias','File-drawer','Proteus phenomenon','HARKing','p-hacking','Optional stopping','Preregistration','Open science','Incentives'];
+  $('#introTags').innerHTML=tags.map(t=>`<span>${t}</span>`).join('');
+  $('#overviewGrid').innerHTML=LESSONS.map((l,i)=>`
+    <div class="lcard" data-i="${i}">
+      <div class="lnum">${String(i+1).padStart(2,'0')}</div>
+      <div class="lsec">${l.sec}</div>
+      <h4>${l.cardTitle}</h4>
+      <p>${l.blurb}</p>
+      <div class="go">Open lesson →</div>
+    </div>`).join('');
+  $$('#overviewGrid .lcard').forEach(c=>c.onclick=()=>{openLesson(+c.dataset.i);switchView('lessons');});
+}
+
+/* LESSON DETAIL */
+function openLesson(i){
+  curLesson=i; const l=LESSONS[i];
+  $('#lessonDetail').innerHTML=`
+    <div class="lesson-top">
+      <span class="chip">${l.sec}</span>
+      <span class="chip" style="color:var(--soft);background:rgba(255,255,255,.03)">${l.tag}</span>
+      <span class="lesson-counter">Lesson ${i+1} of ${LESSONS.length}</span>
+    </div>
+    <h3 class="lesson-title">${l.title}</h3>
+    <div class="lesson-body">
+      <div>
+        <div class="diagram-wrap">${l.svg}</div>
+        <div class="diagram-cap">${l.cap}</div>
+      </div>
+      <div class="points">
+        <div class="ph">Key points</div>
+        ${l.points.map(p=>`<div class="point"><div class="pn">${p[0]}</div><div class="pt">${p[1]}</div></div>`).join('')}
+        <div class="hook">
+          <div class="hi">🧠</div>
+          <div><div class="hl">Memory hook</div><div class="ht">${l.hook}</div></div>
+        </div>
+        ${l.exam?`<div class="exam"><div class="el">▲ Exam tip</div><div class="et">${l.exam}</div></div>`:''}
+      </div>
+    </div>
+    <div class="lesson-nav">
+      <button class="pv" ${i===0?'disabled':''}><span>←</span><span class="lbl"><small>Previous</small>${i>0?LESSONS[i-1].cardTitle:'—'}</span></button>
+      <button class="nx" ${i===LESSONS.length-1?'disabled':''}><span class="lbl"><small>Next</small>${i<LESSONS.length-1?LESSONS[i+1].cardTitle:'—'}</span><span>→</span></button>
+    </div>`;
+  const pv=$('#lessonDetail .pv'), nx=$('#lessonDetail .nx');
+  if(pv)pv.onclick=()=>openLesson(i-1);
+  if(nx)nx.onclick=()=>openLesson(i+1);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* FLASHCARDS */
+function buildFlash(){
+  const topics=['All',...new Set(FLASHCARDS.map(f=>f.topic))];
+  $('#fcFilter').innerHTML=topics.map(t=>`<button data-t="${t}" class="${t==='All'?'on':''}">${t}</button>`).join('');
+  $$('#fcFilter button').forEach(b=>b.onclick=()=>{fcFilterTopic=b.dataset.t;
+    $$('#fcFilter button').forEach(x=>x.classList.toggle('on',x===b));renderFlash();});
+  fcState=FLASHCARDS.map((f,i)=>({...f,idx:i,flipped:false}));
+  renderFlash();
+}
+function renderFlash(){
+  const list=fcState.filter(f=>fcFilterTopic==='All'||f.topic===fcFilterTopic);
+  $('#fcCount').textContent=`Showing ${list.length} card${list.length!==1?'s':''}${fcFilterTopic!=='All'?' · '+fcFilterTopic:''}`;
+  $('#fcGrid').innerHTML=list.length?list.map(f=>`
+    <div class="flip ${f.flipped?'flipped':''}" data-idx="${f.idx}">
+      <div class="flip-in">
+        <div class="face front">
+          <div class="ftag">${f.topic}</div>
+          <div class="flip-num">${String(f.idx+1).padStart(2,'0')}</div>
+          <div class="q">${f.q}</div>
+          <div class="hint">⤿ click to reveal</div>
+        </div>
+        <div class="face back">
+          <div class="ftag">Answer</div>
+          <div class="a">${f.a}</div>
+          <div class="hint">⤾ click to flip back</div>
+        </div>
+      </div>
+    </div>`).join(''):'<div class="empty">No cards in this topic.</div>';
+  $$('#fcGrid .flip').forEach(c=>c.onclick=()=>{
+    const idx=+c.dataset.idx;const card=fcState.find(x=>x.idx===idx);card.flipped=!card.flipped;
+    c.classList.toggle('flipped');});
+}
+$('#shuffleBtn').onclick=()=>{for(let i=fcState.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[fcState[i],fcState[j]]=[fcState[j],fcState[i]];}fcState.forEach(f=>f.flipped=false);renderFlash();};
+$('#resetFcBtn').onclick=()=>{fcState=FLASHCARDS.map((f,i)=>({...f,idx:i,flipped:false}));fcFilterTopic='All';$$('#fcFilter button').forEach(x=>x.classList.toggle('on',x.dataset.t==='All'));renderFlash();};
+
+/* MCQ */
+function buildQuiz(){
+  quizState=MCQS.map(()=>({answered:false,correct:false}));
+  $('#scoreTot').textContent=MCQS.length;
+  $('#quizEnd').classList.remove('show');
+  $('#quizList').style.display='block';
+  $('#quizList').innerHTML=MCQS.map((q,qi)=>`
+    <div class="q-card" data-q="${qi}">
+      <div class="qmeta"><div class="qn">${qi+1}</div><div class="qtopic">${q.topic}</div></div>
+      <div class="qtext">${q.q}</div>
+      <div class="opts">
+        ${q.opts.map((o,oi)=>`<div class="opt" data-o="${oi}"><div class="ol">${'ABCD'[oi]}</div><div>${o}</div></div>`).join('')}
+      </div>
+      <div class="explain"><div class="eh"></div><p></p></div>
+    </div>`).join('');
+  $$('#quizList .q-card').forEach((card,qi)=>{
+    card.querySelectorAll('.opt').forEach(opt=>{
+      opt.onclick=()=>answer(qi,+opt.dataset.o,card);
+    });
+  });
+  updateScore();
+}
+function answer(qi,oi,card){
+  if(quizState[qi].answered)return;
+  const q=MCQS[qi], correct=oi===q.correct;
+  quizState[qi]={answered:true,correct};
+  const opts=card.querySelectorAll('.opt');
+  opts.forEach((o,i)=>{
+    o.classList.add('locked');
+    if(i===q.correct)o.classList.add('correct');
+    if(i===oi&&!correct)o.classList.add('wrong');
+  });
+  const ex=card.querySelector('.explain');
+  ex.classList.add('show',correct?'ok':'no');
+  ex.querySelector('.eh').innerHTML=correct?'✓ Correct':'✕ Not quite';
+  ex.querySelector('p').innerHTML=q.exp;
+  updateScore();
+}
+function updateScore(){
+  const ans=quizState.filter(q=>q.answered).length;
+  const sc=quizState.filter(q=>q.correct).length;
+  $('#scoreNow').textContent=sc;$('#answeredNow').textContent=ans;
+  $('#progBar').style.width=(ans/MCQS.length*100)+'%';
+  if(ans===MCQS.length)showEnd(sc);
+}
+function showEnd(sc){
+  const pct=Math.round(sc/MCQS.length*100);
+  $('#endPct').textContent=pct+'%';
+  let msg,sub;
+  if(pct>=85){msg='Outstanding.';sub='You could teach this theme. Exam-ready.';}
+  else if(pct>=65){msg='Strong work.';sub='Solid grasp — review the few you missed and you are there.';}
+  else if(pct>=45){msg='Getting there.';sub='Revisit the lessons on the topics you slipped on, then retry.';}
+  else{msg='Keep going.';sub='Work back through the visual lessons — the diagrams will lock it in.';}
+  $('#endMsg').textContent=msg;$('#endSub').textContent=`${sc} of ${MCQS.length} correct. ${sub}`;
+  $('#quizEnd').classList.add('show');
+  $('#quizEnd').scrollIntoView({behavior:'smooth'});
+}
+$('#resetQuizBtn').onclick=buildQuiz;
+$('#endRetry').onclick=()=>{buildQuiz();window.scrollTo({top:0,behavior:'smooth'});};
+
+/* INIT */
+buildOverview();openLesson(0);buildFlash();buildQuiz();
+</script>
+</body>
+</html>
